@@ -20,8 +20,66 @@
 using namespace sf;
 using namespace std;
 
+
+// image ->
+
+// runs of pixels across the image with which to sort
+
+// sorts to apply
+
+static vector<Vector2i> getCirclePixels(int x0, int y0, int radius)
+{
+    int x = radius;
+    int y = 0;
+    int radiusError = 1 - x;
+
+    vector<Vector2i> results;
+    
+    while(x >= y)
+    {
+        results.push_back(Vector2i(x + x0, y + y0));
+        results.push_back(Vector2i(y + x0, x + y0));
+        results.push_back(Vector2i(-x + x0, y + y0));
+        results.push_back(Vector2i(-y + x0, x + y0));
+        results.push_back(Vector2i(-x + x0, -y + y0));
+        results.push_back(Vector2i(-y + x0, -x + y0));
+        results.push_back(Vector2i(x + x0, -y + y0));
+        results.push_back(Vector2i(y + x0, -x + y0));
+        y++;
+        if (radiusError < 0)
+        {
+            radiusError += 2 * y + 1;
+        }
+        else
+        {
+            x--;
+            radiusError += 2 * (y - x + 1);
+        }
+    }
+
+    return results;
+}
+
+typedef vector<Vector2i> VectorPixels;
+
+
+vector<VectorPixels> getConcentricCircles(const FloatRect& rect)
+{
+    Vector2f center = {rect.left + rect.width/2, rect.top + rect.height/2};
+    
+    vector<VectorPixels> results;
+    for (Uint32 radius = 1; radius < rect.width; ++radius) {
+        results.push_back(getCirclePixels(center.x, center.y, radius));
+    }
+    
+    return results;
+}
+
 static inline Uint8 intensityAtPixel(Image& image, int x, int y)
 {
+    if (x < 0 || x >= image.getSize().x || y < 0 || y >= image.getSize().y)
+        return 0;
+    
     Color c = image.getPixel(x, y);
     return (Uint8)((c.r + c.g + c.b) / 3.0f);
 }
@@ -40,6 +98,20 @@ Uint32 getFirstNotWhiteY(Image& image, int x, int y, Uint8 whiteValue) {
         if (++y >= height)
             return -1;
     return y;
+}
+
+int getFirstNotBlackRun(Image& image, const VectorPixels& run, int index, Uint8 blackValue)
+{
+    if (index >= run.size())
+        return -1;
+    
+    while (intensityAtPixel(image, run[index].x, run[index].y) < blackValue) {
+        index++;
+        
+        if (index >= run.size())
+            return -1;
+    }
+    return index;
 }
 
 int getFirstNotBlackX(Image& image, int _x, int _y, Uint8 blackValue) {
@@ -75,6 +147,19 @@ int getNextBlackX(Image& image, int _x, int _y, Uint8 blackValue) {
             return width - 1;
     }
     return x - 1;
+}
+
+int getNextBlackRun(Image& image, const VectorPixels& run, int index, Uint8 blackValue) {
+    index++;
+    if (index >= run.size())
+        return run.size() - 1;
+    
+    while (intensityAtPixel(image, run[index].x, run[index].y) > blackValue) {
+        index++;
+        if (index >= run.size())
+            return run.size() - 1;
+    }
+    return index - 1;
 }
 
 Uint32 getNextWhiteX(Image& image, int x, int y, Uint8 whiteValue) {
@@ -118,6 +203,37 @@ struct ColorCmp
 };
 
 static ColorCmp colorCmp;
+
+void sortRun(Image& image, const VectorPixels& run, Uint8 blackValue)
+{
+    std::vector<Color> unsorted;
+    
+    int index = 0;
+    int indexEnd = 0;
+    while (indexEnd < run.size()) {
+        index = getFirstNotBlackRun(image, run, index, blackValue);
+        indexEnd = getNextBlackRun(image, run, index, blackValue);
+        if (index < 0)
+            break;
+        
+        int sortLength = indexEnd - index;
+        if (sortLength < 0)
+            sortLength = 0;
+        unsorted.resize(sortLength);
+        
+        for (int i = 0; i < sortLength; ++i) {
+            unsorted[i] = image.getPixel(run[index+i].x, run[index+i].y);
+        }
+        
+        std::sort(begin(unsorted), end(unsorted), colorCmp);
+        
+        for (int i = 0; i < sortLength; ++i) {
+            image.setPixel(run[index + i].x, run[index + i].y, unsorted[i]);
+        }
+        
+        index = indexEnd + 1;
+    }
+}
 
 void sortCol(Image& image, int height, int column, int mode, Uint8 blackValue) {
     int x = column;
@@ -206,9 +322,14 @@ void prettySort(Image& image, float mouseX, float mouseY, int mode)
     const int width = image.getSize().x;
     const int height = image.getSize().y;
     
+    for (auto run : getConcentricCircles(FloatRect(0, 0, image.getSize().x, image.getSize().y))) {
+        sortRun(image, run, 255 - 255 * mouseX);
+    }
+
     for (int row = 0; row < height; ++row) {
         sortRow(image, width, row, mode, 255 * mouseX);
     }
+    
     for (int col = 0; col < width; ++col) {
         sortCol(image, height, col, mode, 255 * mouseY);
     }
@@ -265,7 +386,7 @@ int main(int, char const**)
         printf("loaded movie '%s'\n", movieFilename.c_str());
     }
     
-    Uint32 mediaIndex = 0;
+    Uint32 mediaIndex = medias.size() - 1;
 
     sf::Clock clock;
     int mode = 0;
@@ -322,6 +443,7 @@ int main(int, char const**)
         }
         
         if (movie.getStatus() == sfe::Status::Stopped) {
+            cout << "replaying video" << endl;
             movie.play();
         }
         
