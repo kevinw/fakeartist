@@ -16,6 +16,8 @@
 #include <SFML/Graphics.hpp>
 #include "video/Movie.hpp"
 
+#include <cstdlib>
+
 #include <vector>
 #include <iostream>
 #include <algorithm>
@@ -248,6 +250,18 @@ static inline Uint8 intensityAtPixel(Uint8* pixels, const Vector2u& size, const 
   return (Uint8)((pixel[0] + pixel[1] + pixel[2]) / 3.0f);
 }
 
+static inline Uint8 intensityAtPixel(Uint32* pixels, Uint32 pixelWidth, int x, int y)
+{
+  const Uint8* pixel = reinterpret_cast<Uint8*>(&pixels[y * pixelWidth + x]);
+  return static_cast<Uint8>((pixel[0] + pixel[1] + pixel[2]) / 3.0f);
+}
+
+
+Uint32* getWritablePixels(Image& image)
+{
+    return reinterpret_cast<Uint32*>(const_cast<Uint8*>(image.getPixelsPtr()));
+}
+
 static inline Uint8 intensityAtPixel(Image& image, int x, int y)
 {
     if (x < 0) x = 0;
@@ -276,12 +290,12 @@ Uint32 getFirstNotWhiteY(Image& image, int x, int y, Uint8 whiteValue) {
     return y;
 }
 
-int getFirstNotBlackRun(Image& image, const VectorPixels& run, int index, Uint8 blackValue)
+int getFirstNotBlackRun(Uint32* pixels, const Vector2u& size, const VectorPixels& run, int index, Uint8 blackValue)
 {
     if (index >= run.size())
         return -1;
     
-    while (intensityAtPixel(image, run[index].x, run[index].y) < blackValue) {
+    while (intensityAtPixel(pixels, size.x, run[index].x, run[index].y) < blackValue) {
         index++;
         
         if (index >= run.size())
@@ -290,47 +304,43 @@ int getFirstNotBlackRun(Image& image, const VectorPixels& run, int index, Uint8 
     return index;
 }
 
-int getFirstNotBlackX(Image& image, int _x, int _y, Uint8 blackValue) {
+int getFirstNotBlackX(Uint32* pixels, const Vector2u& size, int _x, int _y, Uint8 blackValue) {
     int x = _x;
     int y = _y;
-    while (intensityAtPixel(image, x, y) < blackValue) {
+    while (intensityAtPixel(pixels, size.x, x, y) < blackValue) {
         ++x;
-        if (x >= image.getSize().x)
+        if (x >= size.x)
             return -1;
     }
     return x;
 }
 
-int getFirstNotBlackY(Image& image, int _x, int _y, Uint8 blackValue) {
+int getFirstNotBlackY(Uint32* pixels, const Vector2u& size, int _x, int _y, Uint8 blackValue) {
     int x = _x;
     int y = _y;
-    while (intensityAtPixel(image, x, y) < blackValue) {
-        ++y;
-        if (y >= image.getSize().y)
+    while (intensityAtPixel(pixels, size.x, x, y) < blackValue) {
+        if (++y >= size.y)
             return -1;
     }
     return y;
 }
 
-
-int getNextBlackX(Image& image, int _x, int _y, Uint8 blackValue) {
+int getNextBlackX(Uint32* pixels, const Vector2u& size, int _x, int _y, Uint8 blackValue) {
     int x = _x+1;
     int y = _y;
-    const int width = image.getSize().x;
-    while (intensityAtPixel(image, x, y) > blackValue) {
-        x++;
-        if (x >= width)
-            return width - 1;
+    while (x < size.x && intensityAtPixel(pixels, size.x, x, y) > blackValue) {
+        if (++x >= size.x)
+            return size.x - 1;
     }
     return x - 1;
 }
 
-int getNextBlackRun(Image& image, const VectorPixels& run, int index, Uint8 blackValue) {
+int getNextBlackRun(Uint32* pixels, const Vector2u& size, const VectorPixels& run, int index, Uint8 blackValue) {
     index++;
     if (index >= run.size())
         return run.size() - 1;
     
-    while (intensityAtPixel(image, run[index].x, run[index].y) > blackValue) {
+    while (intensityAtPixel(pixels, size.x, run[index].x, run[index].y) > blackValue) {
         index++;
         if (index >= run.size())
             return run.size() - 1;
@@ -356,19 +366,24 @@ Uint32 getNextWhiteY(Image& image, int x, int y, Uint8 whiteValue) {
     return y - 1;
 }
 
-int getNextBlackY(Image& image, int _x, int _y, Uint8 blackValue) {
+int getNextBlackY(Uint32* pixels, const Vector2u& size, int _x, int _y, Uint8 blackValue) {
     int x = _x;
-    int y = _y+1;
-    const int height = image.getSize().y;
+    int y = _y + 1;
+    const int height = size.y;
     if (y >= height)
         return height - 1;
     
-    while (intensityAtPixel(image, x, y) > blackValue) {
+    while (intensityAtPixel(pixels, size.x, x, y) > blackValue) {
         y++;
         if (y >= height)
             return height - 1;
     }
     return y - 1;
+}
+
+
+int comp( const void* a, const void* b ) {
+    return ( *( Uint32* )a - *( Uint32* )b );
 }
 
 void sortRun(Image& image, const VectorPixels& run, Uint8 blackValue)
@@ -377,11 +392,11 @@ void sortRun(Image& image, const VectorPixels& run, Uint8 blackValue)
     
     int index = 0;
     int indexEnd = 0;
-    Uint8* pixels = const_cast<Uint8*>(image.getPixelsPtr());
-    Uint32 pixelsWidth = image.getSize().x;
+    Uint32* pixels = getWritablePixels(image);
+    const Vector2u& size = image.getSize();
     while (indexEnd < run.size()) {
-        index = getFirstNotBlackRun(image, run, index, blackValue);
-        indexEnd = getNextBlackRun(image, run, index, blackValue);
+        index = getFirstNotBlackRun(pixels, size, run, index, blackValue);
+        indexEnd = getNextBlackRun(pixels, size, run, index, blackValue);
         if (index < 0)
             break;
         
@@ -392,19 +407,24 @@ void sortRun(Image& image, const VectorPixels& run, Uint8 blackValue)
         
         for (int i = 0; i < sortLength; ++i) {
             const Vector2i& p = run[index + i];
-            unsorted[i] = *reinterpret_cast<Uint32*>(&pixels[(p.y * pixelsWidth + p.x) * 4]);
+            unsorted[i] = pixels[p.y * size.x + p.x];
         }
         
         std::sort(begin(unsorted), end(unsorted));
+        //std::qsort(&unsorted[0], unsorted.size(), sizeof( Uint32 ), comp );
+
         
         for (int i = 0; i < sortLength; ++i) {
             const Vector2i& p = run[index + i];
-            *reinterpret_cast<Uint32*>(&pixels[(p.y * pixelsWidth + p.x) * 4]) = unsorted[i];
+            pixels[p.y * size.x + p.x] = unsorted[i];
         }
         
         index = indexEnd + 1;
     }
 }
+
+
+
 
 void sortCol(Image& image, int column, Uint8 blackValue)
 {
@@ -412,13 +432,13 @@ void sortCol(Image& image, int column, Uint8 blackValue)
     int y = 0;
     int yend = 0;
     
-    Uint8* pixels = const_cast<Uint8*>(image.getPixelsPtr());
-    Uint32 pixelsWidth = image.getSize().x;
+    Uint32* pixels = getWritablePixels(image);
+    const Vector2u& size = image.getSize();
     std::vector<Uint32> unsorted;
     
     while (yend < image.getSize().y - 1) {
-        y = getFirstNotBlackY(image, x, y, blackValue);
-        yend = getNextBlackY(image, x, y, blackValue);
+        y = getFirstNotBlackY(pixels, size, x, y, blackValue);
+        yend = getNextBlackY(pixels, size, x, y, blackValue);
         
         if (y < 0) break;
         
@@ -426,17 +446,18 @@ void sortCol(Image& image, int column, Uint8 blackValue)
         unsorted.resize(sortLength);
         
         for (int i = 0; i < sortLength; ++i) {
-            unsorted[i] = *reinterpret_cast<Uint32*>(&pixels[((y + i) * pixelsWidth + x) * 4]);
+            unsorted[i] = pixels[(y + i) * size.x + x];
         }
         
         std::sort(unsorted.begin(), unsorted.end());
+        //std::qsort(&unsorted[0], unsorted.size(), sizeof( Uint32 ), comp );
+
         
         for (int i = 0; i < sortLength; ++i) {
-            *reinterpret_cast<Uint32*>(&pixels[((y + i) * pixelsWidth + x) * 4]) = unsorted[i];
+            pixels[(y + i) * size.x + x] = unsorted[i];
         }
         
-        
-        y = yend+1;
+        y = yend + 1;
     }
 }
 
@@ -446,13 +467,14 @@ void sortRow(Image& image, int row, Uint8 blackValue)
     int y = row;
     int xend = 0;
     
-    Uint8* pixels = const_cast<Uint8*>(image.getPixelsPtr());
+    Uint32* pixels = reinterpret_cast<Uint32*>(const_cast<Uint8*>(image.getPixelsPtr()));
     Uint32 pixelsWidth = image.getSize().x;
+    const Vector2u& size = image.getSize();
     std::vector<Uint32> unsorted;
   
-    while (xend < image.getSize().x - 1) {
-        x = getFirstNotBlackX(image, x, y, blackValue);
-        xend = getNextBlackX(image, x, y, blackValue);
+    while (xend < pixelsWidth - 1) {
+        x = getFirstNotBlackX(pixels, size, x, y, blackValue);
+        xend = getNextBlackX(pixels, size, x, y, blackValue);
     
         if (x < 0) break;
     
@@ -460,13 +482,15 @@ void sortRow(Image& image, int row, Uint8 blackValue)
         unsorted.resize(sortLength);
         
         for (int i = 0; i < sortLength; ++i) {
-            unsorted[i] = *reinterpret_cast<Uint32*>(&pixels[(y * pixelsWidth + (x + i)) * 4]);
+            unsorted[i] = pixels[y * pixelsWidth + (x + i)];
         }
         
         std::sort(unsorted.begin(), unsorted.end());
+        //std::qsort(&unsorted[0], unsorted.size(), sizeof( Uint32 ), comp );
+
         
         for (int i = 0; i < sortLength; ++i) {
-            *reinterpret_cast<Uint32*>(&pixels[(y * pixelsWidth + (x + i)) * 4]) = unsorted[i];
+            pixels[y * pixelsWidth + (x + i)] = unsorted[i];
         }
     
         x = xend + 1;
