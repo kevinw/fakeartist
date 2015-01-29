@@ -371,38 +371,6 @@ int getNextBlackY(Image& image, int _x, int _y, Uint8 blackValue) {
     return y - 1;
 }
 
-struct PixelCmp
-{
-  bool operator ()(const Uint8* a, const Uint8* b) {
-    return a[0] + a[1] + a[2] < b[1] + b[2] + b[3];
-  }
-};
-
-static PixelCmp pixelCmp;
-
-struct ColorCmp
-{
-    bool operator ()(const Color& a, const Color& b) {
-        return a.r + a.g + a.b < b.r + b.g + b.b;
-    }
-};
-
-static ColorCmp colorCmp;
-
-Color getPixelSafe(Image& image, Vector2i point) {
-    int x = point.x;
-    int y = point.y;
-    if (x < 0)
-        x = 0;
-    if (x >= image.getSize().x)
-        x = image.getSize().x - 1;
-    if (y < 0)
-        y = 0;
-    if (y >= image.getSize().y)
-        y = image.getSize().y - 1;
-    return image.getPixel(x, y);
-}
-
 void sortRun(Image& image, const VectorPixels& run, Uint8 blackValue)
 {
     std::vector<Uint32> unsorted;
@@ -566,33 +534,22 @@ vector<Span> getSpans(const Run& run) {
   return spans;
 }
 
-void prettySort2(Image& image, const Vector2f& mouse)
-{
-  for (auto run : getRuns(image)) {
-    for (auto span : getSpans(run)) {
-      std::sort(span.begin(), span.end(), pixelCmp);
-    }
-  }
-}
-
 void prettySort(Image& image, float mouseX, float mouseY)
 {
     const int width = image.getSize().x;
     const int height = image.getSize().y;
     
     FloatRect imageRect(0, 0, image.getSize().x, image.getSize().y);
-    for (auto run : getManySpirals(imageRect, Vector2u(mouseX * 400, mouseY * 400))) {
-        sortRun(image, run, mouseX * 255);
-    }
-    for (int row = 0; row < height; ++row) {
-        sortRow(image, row, 255 * mouseX);
-    }
-    
     for (int col = 0; col < width; ++col) {
         sortCol(image, col, 255 * mouseY);
     }
 
-    
+    for (int row = 0; row < height; ++row) {
+        sortRow(image, row, 255 * mouseX);
+    }
+    for (auto run : getManySpirals(imageRect, Vector2u(mouseX * 400, mouseY * 400))) {
+        sortRun(image, run, mouseX * 255);
+    }
 }
 
 namespace sfe {
