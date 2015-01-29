@@ -76,6 +76,58 @@ static vector<Vector2i> getCirclePixels(int x0, int y0, int radius)
 }
 
 
+Vector2i newDirection(const Vector2i& old)
+{
+    if (old.x == 1 && old.y == 0) {
+        return Vector2i(0, 1);
+    } else if (old.x == 0 && old.y == 1) {
+        return Vector2i(-1, 0);
+    } else if (old.x == -1 && old.y == 0) {
+        return Vector2i(0, -1);
+    } else if (old.x == 0 && old.y == -1) {
+        return Vector2i(1, 0);
+    } else {
+        cerr << "unexpected case" << endl;
+    }
+}
+
+VectorPixels getSpiral(const FloatRect& rect_)
+{
+    VectorPixels results;
+    
+    IntRect rect(rect_);
+    
+    Vector2i position(rect.left, rect.top);
+    Vector2i velocity(1, 0);
+    
+    int n = rect.width*rect.height;
+    while (n--) {
+        if (rect_.contains(position.x, position.y)) {
+            results.push_back(position);
+        }
+        position += velocity;
+        if (!rect.contains(position.x, position.y)) {
+            position -= velocity;
+            
+            velocity = newDirection(velocity);
+            if (velocity.x == 0 && velocity.y == -1) {
+                rect.width -= 1;
+                rect.height -= 1;
+            } else if (velocity.x == 1 && velocity.y == 0) {
+                rect.left += 1;
+                rect.width -= 1;
+                rect.top += 1;
+                rect.height -=1;
+            }
+            
+            position += velocity;
+        }
+    }
+    
+    return results;
+    
+}
+
 vector<VectorPixels> getConcentricCircles(const FloatRect& rect)
 {
     Vector2f center = {rect.left + rect.width/2, rect.top + rect.height/2};
@@ -93,6 +145,39 @@ vector<VectorPixels> getConcentricCircles(const FloatRect& rect)
         
         if (valid)
             results.push_back(circle);
+    }
+    
+    return results;
+}
+
+vector<VectorPixels> getManySpirals(const FloatRect& rect, Vector2u size)
+{
+    Vector2u subdivs(rect.width / size.x, rect.height / size.y);
+    vector<VectorPixels> results;
+    
+    for (int row = 0; row < subdivs.y; ++row) {
+        for (int col = 0; col < subdivs.x; ++col) {
+            FloatRect subdiv = FloatRect(col * size.x, row * size.y, size.x, size.y);
+            results.push_back(getSpiral(subdiv));
+        }
+    }
+    
+    return results;
+}
+
+
+vector<VectorPixels> getManyCircles(const FloatRect& rect, Vector2u size)
+{
+    Vector2u subdivs(rect.width / size.x, rect.height / size.y);
+    vector<VectorPixels> results;
+    
+    for (int row = 0; row < subdivs.y; ++row) {
+        for (int col = 0; col < subdivs.x; ++col) {
+            FloatRect subdiv = FloatRect(col * size.x, row * size.y, size.x, size.y);
+            for (auto circle : getConcentricCircles(subdiv)) {
+                results.push_back(circle);
+            }
+        }
     }
     
     return results;
@@ -436,9 +521,12 @@ void prettySort(Image& image, float mouseX, float mouseY)
     const int width = image.getSize().x;
     const int height = image.getSize().y;
     
-    for (auto run : getConcentricCircles(FloatRect(0, 0, image.getSize().x, image.getSize().y))) {
-        sortRun(image, run, 255 - 255 * mouseX);
+    FloatRect imageRect(0, 0, image.getSize().x, image.getSize().y);
+    
+    for (auto run : getManySpirals(imageRect, Vector2u(mouseX * 400, mouseY * 400))) {
+        sortRun(image, run, mouseX * 255);
     }
+    /*
 
     for (int row = 0; row < height; ++row) {
         sortRow(image, row, 255 * mouseX);
@@ -447,6 +535,7 @@ void prettySort(Image& image, float mouseX, float mouseY)
     for (int col = 0; col < width; ++col) {
         sortCol(image, col, 255 * mouseY);
     }
+    */
 }
 
 namespace sfe {
@@ -458,6 +547,10 @@ int main2();
 
 int main(int, char const**)
 {
+    for (auto point : getSpiral(FloatRect(0, 0, 3, 3))) {
+        printf("WAT (%d, %d)\n", point.x, point.y);
+    }
+    
     RenderWindow window(VideoMode(800, 600), "fake artist");
     
     Image icon;
