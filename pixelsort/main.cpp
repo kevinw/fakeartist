@@ -91,6 +91,65 @@ Vector2i newDirection(const Vector2i& old)
     }
 }
 
+//
+// use texture.
+//
+// 00000
+// 01200
+// 00030
+// 00004
+
+
+float randomFloat() {
+    return ((float)rand()) / (float)RAND_MAX;
+}
+
+
+
+Vector2i randomPoint(const FloatRect& rect)
+{
+    return Vector2i(randomFloat() * rect.width + rect.left,
+                    randomFloat() * rect.height + rect.top);
+}
+
+Vector2i randomVelocity()
+{
+    return Vector2i(randomFloat()*2-1, randomFloat()*2-1);
+}
+
+VectorPixels getRandomWalk(const FloatRect& rect)
+{
+    VectorPixels results;
+    Vector2i p(randomPoint(rect));
+    Vector2i velocity(randomVelocity());
+    
+    int N = randomFloat() * 500;
+    
+    for (int i = 0; i < N; ++i) {
+        int length = randomFloat() * 50;
+        while(length-- > 0) {
+            if (rect.contains(p.x, p.y)) {
+                results.push_back(p);
+                
+            }
+            p += velocity;
+        }
+    }
+    
+    return results;
+    
+}
+
+vector<VectorPixels> getRandomWalks(const FloatRect& rect)
+{
+    vector<VectorPixels> results;
+    int count = 200;
+    for (int i = 0; i < count; ++i) {
+        results.push_back(getRandomWalk(rect));
+    }
+    return results;
+}
+
 VectorPixels getSpiral(const FloatRect& rect_)
 {
     VectorPixels results;
@@ -522,12 +581,9 @@ void prettySort(Image& image, float mouseX, float mouseY)
     const int height = image.getSize().y;
     
     FloatRect imageRect(0, 0, image.getSize().x, image.getSize().y);
-    
     for (auto run : getManySpirals(imageRect, Vector2u(mouseX * 400, mouseY * 400))) {
         sortRun(image, run, mouseX * 255);
     }
-    /*
-
     for (int row = 0; row < height; ++row) {
         sortRow(image, row, 255 * mouseX);
     }
@@ -535,7 +591,8 @@ void prettySort(Image& image, float mouseX, float mouseY)
     for (int col = 0; col < width; ++col) {
         sortCol(image, col, 255 * mouseY);
     }
-    */
+
+    
 }
 
 namespace sfe {
@@ -547,10 +604,6 @@ int main2();
 
 int main(int, char const**)
 {
-    for (auto point : getSpiral(FloatRect(0, 0, 3, 3))) {
-        printf("WAT (%d, %d)\n", point.x, point.y);
-    }
-    
     RenderWindow window(VideoMode(800, 600), "fake artist");
     
     Image icon;
@@ -592,7 +645,6 @@ int main(int, char const**)
     for (auto movieFilename : findMovies()) {
         Media media = {Media::MOVIE, movieFilename};
         medias.push_back(media);
-        printf("loaded movie '%s'\n", movieFilename.c_str());
     }
     
     Uint32 mediaIndex = medias.size() - 1;
