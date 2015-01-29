@@ -278,40 +278,33 @@ void sortRun(Image& image, const VectorPixels& run, Uint8 blackValue)
     }
 }
 
-void sortCol(Image& image, int column, int mode, Uint8 blackValue) {
+void sortCol(Image& image, int column, Uint8 blackValue)
+{
     int x = column;
     int y = 0;
     int yend = 0;
     
-    std::vector<Color> unsorted;
+    Uint8* pixels = const_cast<Uint8*>(image.getPixelsPtr());
+    Uint32 pixelsWidth = image.getSize().x;
+    std::vector<Uint32> unsorted;
     
-    while(yend < image.getSize().y - 1) {
-        switch(mode) {
-            case 0:
-                y = getFirstNotBlackY(image, x, y, blackValue);
-                yend = getNextBlackY(image, x, y, blackValue);
-                break;
-            case 1:
-                y = getFirstNotWhiteY(image, x, y, blackValue);
-                yend = getNextWhiteY(image, x, y, blackValue);
-                break;
-            default:
-                break;
-        }
+    while (yend < image.getSize().y - 1) {
+        y = getFirstNotBlackY(image, x, y, blackValue);
+        yend = getNextBlackY(image, x, y, blackValue);
         
-        if(y < 0) break;
+        if (y < 0) break;
         
         int sortLength = yend-y;
         unsorted.resize(sortLength);
         
         for (int i = 0; i < sortLength; ++i) {
-            unsorted[i] = image.getPixel(x, y + i);
+            unsorted[i] = *reinterpret_cast<Uint32*>(&pixels[((y + i) * pixelsWidth + x) * 4]);
         }
         
-        std::sort(unsorted.begin(), unsorted.end(), colorCmp);
+        std::sort(unsorted.begin(), unsorted.end());
         
         for (int i = 0; i < sortLength; ++i) {
-            image.setPixel(x, y + i, unsorted[i]);
+            *reinterpret_cast<Uint32*>(&pixels[((y + i) * pixelsWidth + x) * 4]) = unsorted[i];
         }
         
         
@@ -319,53 +312,38 @@ void sortCol(Image& image, int column, int mode, Uint8 blackValue) {
     }
 }
 
-void sortRow(Image& image, int row, int mode, Uint8 blackValue)
+void sortRow(Image& image, int row, Uint8 blackValue)
 {
     int x = 0;
     int y = row;
     int xend = 0;
+    
+    Uint8* pixels = const_cast<Uint8*>(image.getPixelsPtr());
+    Uint32 pixelsWidth = image.getSize().x;
+    std::vector<Uint32> unsorted;
   
     while (xend < image.getSize().x - 1) {
-        switch(mode) {
-            case 0:
-                x = getFirstNotBlackX(image, x, y, blackValue);
-                xend = getNextBlackX(image, x, y, blackValue);
-                break;
-            case 1:
-                x = getFirstNotWhiteX(image, x, y, blackValue);
-                xend = getNextWhiteX(image, x, y, blackValue);
-                break;
-            default:
-                break;
-        }
+        x = getFirstNotBlackX(image, x, y, blackValue);
+        xend = getNextBlackX(image, x, y, blackValue);
     
-        if(x < 0)
-            break;
+        if (x < 0) break;
     
         int sortLength = xend - x;
+        unsorted.resize(sortLength);
         
-        std::vector<Color> unsorted(sortLength);
         for (int i = 0; i < sortLength; ++i) {
-            unsorted[i] = image.getPixel(x + i, y);
+            unsorted[i] = *reinterpret_cast<Uint32*>(&pixels[(y * pixelsWidth + (x + i)) * 4]);
         }
         
-        std::sort(unsorted.begin(), unsorted.end(), colorCmp);
+        std::sort(unsorted.begin(), unsorted.end());
         
         for (int i = 0; i < sortLength; ++i) {
-            image.setPixel(x + i, y, unsorted[i]);
+            *reinterpret_cast<Uint32*>(&pixels[(y * pixelsWidth + (x + i)) * 4]) = unsorted[i];
         }
     
-        x = xend+1;
+        x = xend + 1;
     }
 }
-
-/*
-for (auto run : getRuns(image)) {
-  for (auto span : getSpans(run)) {
-    std::sort(span.begin(), span.end(), colorCmp);
-  }
-}
-*/
 
 template <typename T>
 struct ImageIterator
@@ -428,7 +406,7 @@ vector<Span> getSpans(const Run& run) {
   return spans;
 }
 
-void prettySort2(Image& image, const Vector2f& mouse, int mode)
+void prettySort2(Image& image, const Vector2f& mouse)
 {
   for (auto run : getRuns(image)) {
     for (auto span : getSpans(run)) {
@@ -437,21 +415,22 @@ void prettySort2(Image& image, const Vector2f& mouse, int mode)
   }
 }
 
-void prettySort(Image& image, float mouseX, float mouseY, int mode)
+void prettySort(Image& image, float mouseX, float mouseY)
 {
     const int width = image.getSize().x;
     const int height = image.getSize().y;
     
+    if (0)
     for (auto run : getConcentricCircles(FloatRect(0, 0, image.getSize().x, image.getSize().y))) {
         sortRun(image, run, 255 - 255 * mouseX);
     }
 
     for (int row = 0; row < height; ++row) {
-        sortRow(image, row, mode, 255 * mouseX);
+        sortRow(image, row, 255 * mouseX);
     }
     
     for (int col = 0; col < width; ++col) {
-        sortCol(image, col, mode, 255 * mouseY);
+        sortCol(image, col, 255 * mouseY);
     }
 }
 
@@ -511,7 +490,6 @@ int main(int, char const**)
     Uint32 mediaIndex = medias.size() - 1;
 
     sf::Clock clock;
-    int mode = 0;
 
     bool updateMedia = true;
 
@@ -527,12 +505,6 @@ int main(int, char const**)
                 switch (event.key.code) {
                     case Keyboard::Escape:
                         window.close();
-                        break;
-                    case Keyboard::Num1:
-                        mode = 0;
-                        break;
-                    case Keyboard::Num2:
-                        mode = 1;
                         break;
                     case Keyboard::Right:
                         mediaIndex = (mediaIndex + 1) % medias.size();
@@ -570,13 +542,13 @@ int main(int, char const**)
             movie.play();
         }
         
-        float mouseY = static_cast<float>(Mouse::getPosition(window).x) / window.getSize().x;
-        float mouseX = static_cast<float>(Mouse::getPosition(window).y) / window.getSize().y;
+        float mouseX = static_cast<float>(Mouse::getPosition(window).x) / window.getSize().x;
+        float mouseY = static_cast<float>(Mouse::getPosition(window).y) / window.getSize().y;
 
         movie.update();
         Image imageCopy = movie.getCurrentImage().copyToImage();
-        // prettySort(imageCopy, mouseX, mouseY, mode);
-        prettySort2(imageCopy, Vector2f(mouseX, mouseY), mode);
+        prettySort(imageCopy, mouseX, mouseY);
+        // prettySort2(imageCopy, Vector2f(mouseX, mouseY));
         texture.update(imageCopy);
 
         window.clear();
