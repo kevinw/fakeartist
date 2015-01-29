@@ -202,6 +202,8 @@ namespace sfe
         void draw(sf::RenderTarget& target, sf::RenderStates states) const;
         void didUpdateVideo(const VideoStream& sender, const sf::Texture& image);
         
+        float getVideoRotation() const;
+        
     private:
         sf::Transformable& m_movieView;
         std::shared_ptr<Demuxer> m_demuxer;

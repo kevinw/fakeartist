@@ -28,7 +28,7 @@
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System.hpp>
-#include <sfeMovie/Visibility.hpp>
+#include "Visibility.hpp"
 #include <vector>
 #include <string>
 #include <memory>
@@ -224,6 +224,9 @@ namespace sfe
          * @return the current image of the movie for the activated video stream
          */
         const sf::Texture& getCurrentImage() const;
+        
+        float getVideoRotation() const;
+        
     private:
         void draw(sf::RenderTarget& Target, sf::RenderStates states) const;
         std::shared_ptr<MovieImpl> m_impl;

@@ -1,6 +1,6 @@
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
-#include <sfeMovie/Movie.hpp>
+#include "video/Movie.hpp"
 
 #include <vector>
 #include <iostream>

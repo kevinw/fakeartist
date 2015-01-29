@@ -356,14 +356,17 @@ namespace sfe
         }
     }
     
+    float MovieImpl::getVideoRotation() const
+    {
+        if (auto videoStream = m_demuxer->getSelectedVideoStream()) {
+            return videoStream->getVideoRotation();
+        }
+        
+        return 0.0f;
+    }
+    
     void MovieImpl::draw(sf::RenderTarget& target, sf::RenderStates states) const
     {
-        std::shared_ptr<VideoStream> videoStream = m_demuxer->getSelectedVideoStream();
-        if (videoStream) {
-            float r = videoStream->getRotation();
-            states.transform.rotate(r);
-        }
-
         target.draw(m_videoSprite, states);
     }
     

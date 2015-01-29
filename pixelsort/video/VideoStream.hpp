@@ -77,7 +77,7 @@ namespace sfe
         
         /** Get the rotation.
          */
-        float getRotation() const { return rotation; }
+        float getVideoRotation() const { return m_rotation; }
         
         /** Update the video frame and the stream's status
          */
@@ -140,7 +140,7 @@ namespace sfe
         
         sf::Time m_lastDecodedTimestamp;
         
-        float rotation = 0.0f;
+        float m_rotation = 0.0f;
     };
 }
 

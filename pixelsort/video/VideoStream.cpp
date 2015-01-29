@@ -74,7 +74,7 @@ namespace sfe
         for (int i = 0; i < stream->nb_side_data; ++i) {
             AVPacketSideData sideData = stream->side_data[i];
             if (sideData.type == AV_PKT_DATA_DISPLAYMATRIX) {
-                rotation = av_display_rotation_get((int32_t *)sideData.data);
+                m_rotation = -av_display_rotation_get((int32_t *)sideData.data);
             }
         }
     }

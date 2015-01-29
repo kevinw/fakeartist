@@ -27,7 +27,7 @@
 
 #include <set>
 #include <SFML/System.hpp>
-#include <sfeMovie/Movie.hpp>
+#include "Movie.hpp"
 
 namespace sfe
 {

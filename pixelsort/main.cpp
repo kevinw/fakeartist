@@ -14,7 +14,7 @@
 
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
-#include <sfeMovie/Movie.hpp>
+#include "video/Movie.hpp"
 
 #include <vector>
 #include <iostream>
@@ -561,6 +561,8 @@ int main(int, char const**)
             movieSprite.setTexture(texture, true);
             movieSprite.setOrigin(movie.getSize().x/2.0f, movie.getSize().y/2.0f);
             movieSprite.setPosition(window.getSize().x/2.0f, window.getSize().y/2.0f);
+            movieSprite.setRotation(movie.getVideoRotation());
+
         }
         
         if (movie.getStatus() == sfe::Status::Stopped) {

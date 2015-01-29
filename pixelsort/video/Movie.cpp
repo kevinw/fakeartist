@@ -22,7 +22,7 @@
  *
  */
 
-#include <sfeMovie/Movie.hpp>
+#include "Movie.hpp"
 #include "MovieImpl.hpp"
 
 
@@ -136,6 +136,11 @@ namespace sfe
     {
         states.transform *= getTransform();
         target.draw(*m_impl, states);
+    }
+    
+    float Movie::getVideoRotation() const
+    {
+        return m_impl->getVideoRotation();
     }
     
 } // namespace sfe
