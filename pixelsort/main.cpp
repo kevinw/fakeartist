@@ -1,3 +1,8 @@
+//
+// TODO: 
+//
+// use a square texture instead of checking bounds
+//
 
 // Note that the "Run Script" build phase will copy the required frameworks
 // or dylibs to your application bundle so you can execute it on any OS X
@@ -13,12 +18,15 @@
 
 #include <vector>
 #include <iostream>
+#include <algorithm>
 
 #include "ResourcePath.hpp"
 #include "platform.h"
 
 using namespace sf;
 using namespace std;
+
+typedef vector<Vector2i> VectorPixels;
 
 
 // image ->
@@ -60,26 +68,33 @@ static vector<Vector2i> getCirclePixels(int x0, int y0, int radius)
     return results;
 }
 
-typedef vector<Vector2i> VectorPixels;
-
 
 vector<VectorPixels> getConcentricCircles(const FloatRect& rect)
 {
     Vector2f center = {rect.left + rect.width/2, rect.top + rect.height/2};
     
     vector<VectorPixels> results;
-    for (Uint32 radius = 1; radius < rect.width; ++radius) {
+    for (Uint32 radius = 1; radius < max(rect.width, rect.height); ++radius) {
         results.push_back(getCirclePixels(center.x, center.y, radius));
     }
     
     return results;
 }
 
+static inline Uint8 intensityAtPixel(Uint8* pixels, const Vector2u& size, const Vector2u& pos)
+{
+  const Uint8* pixel = &pixels[(pos.x + pos.y * size.x) * 4];
+  return (Uint8)((pixel[0] + pixel[1] + pixel[2]) / 3.0f);
+}
+
 static inline Uint8 intensityAtPixel(Image& image, int x, int y)
 {
-    if (x < 0 || x >= image.getSize().x || y < 0 || y >= image.getSize().y)
-        return 0;
-    
+    if (x < 0) x = 0;
+    if (x >= image.getSize().x)
+        x = image.getSize().x - 1;
+    if (y < 0) y = 0;
+    if (y >= image.getSize().y)
+        y = image.getSize().y - 1;
     Color c = image.getPixel(x, y);
     return (Uint8)((c.r + c.g + c.b) / 3.0f);
 }
@@ -195,6 +210,15 @@ int getNextBlackY(Image& image, int _x, int _y, Uint8 blackValue) {
     return y - 1;
 }
 
+struct PixelCmp
+{
+  bool operator ()(const Uint8* a, const Uint8* b) {
+    return a[0] + a[1] + a[2] < b[1] + b[2] + b[3];
+  }
+};
+
+static PixelCmp pixelCmp;
+
 struct ColorCmp
 {
     bool operator ()(const Color& a, const Color& b) {
@@ -203,6 +227,20 @@ struct ColorCmp
 };
 
 static ColorCmp colorCmp;
+
+Color getPixelSafe(Image& image, Vector2i point) {
+    int x = point.x;
+    int y = point.y;
+    if (x < 0)
+        x = 0;
+    if (x >= image.getSize().x)
+        x = image.getSize().x - 1;
+    if (y < 0)
+        y = 0;
+    if (y >= image.getSize().y)
+        y = image.getSize().y - 1;
+    return image.getPixel(x, y);
+}
 
 void sortRun(Image& image, const VectorPixels& run, Uint8 blackValue)
 {
@@ -222,27 +260,32 @@ void sortRun(Image& image, const VectorPixels& run, Uint8 blackValue)
         unsorted.resize(sortLength);
         
         for (int i = 0; i < sortLength; ++i) {
-            unsorted[i] = image.getPixel(run[index+i].x, run[index+i].y);
+            unsorted[i] = getPixelSafe(image, run[index+i]);
         }
         
         std::sort(begin(unsorted), end(unsorted), colorCmp);
         
         for (int i = 0; i < sortLength; ++i) {
-            image.setPixel(run[index + i].x, run[index + i].y, unsorted[i]);
+            int x = run[index + i].x;
+            int y = run[index + i].y;
+            if (x < 0 || y < 0 || x >= image.getSize().x || y >= image.getSize().y)
+                continue;
+            
+            image.setPixel(x, y, unsorted[i]);
         }
         
         index = indexEnd + 1;
     }
 }
 
-void sortCol(Image& image, int height, int column, int mode, Uint8 blackValue) {
+void sortCol(Image& image, int column, int mode, Uint8 blackValue) {
     int x = column;
     int y = 0;
     int yend = 0;
     
     std::vector<Color> unsorted;
     
-    while(yend < height-1) {
+    while(yend < image.getSize().y - 1) {
         switch(mode) {
             case 0:
                 y = getFirstNotBlackY(image, x, y, blackValue);
@@ -276,14 +319,13 @@ void sortCol(Image& image, int height, int column, int mode, Uint8 blackValue) {
     }
 }
 
-
-void sortRow(Image& image, int width, int row, int mode, Uint8 blackValue)
+void sortRow(Image& image, int row, int mode, Uint8 blackValue)
 {
     int x = 0;
     int y = row;
     int xend = 0;
   
-    while (xend < width - 1) {
+    while (xend < image.getSize().x - 1) {
         switch(mode) {
             case 0:
                 x = getFirstNotBlackX(image, x, y, blackValue);
@@ -317,6 +359,84 @@ void sortRow(Image& image, int width, int row, int mode, Uint8 blackValue)
     }
 }
 
+/*
+for (auto run : getRuns(image)) {
+  for (auto span : getSpans(run)) {
+    std::sort(span.begin(), span.end(), colorCmp);
+  }
+}
+*/
+
+template <typename T>
+struct ImageIterator
+{
+  ImageIterator(Uint8* pixels, T* run)
+    : m_pixels(pixels)
+    , m_run(run)
+  {
+  }
+
+  Uint8* m_pixels;
+  T* m_run;
+};
+
+struct Run
+{
+  Run(Uint8* pixels, Vector2u size, Uint32 row) 
+    : m_pixels(pixels)
+    , m_size(size)
+    , m_row(row)
+  {
+  }
+
+
+  const ImageIterator<Run> begin() {
+    return ImageIterator<Run>(&m_pixels[m_row * m_size.y * 4], this);
+  }
+
+  const ImageIterator<Run> end() {
+    return ImageIterator<Run>(&m_pixels[(m_size.x + m_row * m_size.y) * 4], this);
+  }
+
+  Uint8* m_pixels;
+  Vector2u m_size;
+  Uint32 m_row;
+};
+
+vector<Run> getRuns(Image& image) {
+  vector<Run> runs;
+
+  return runs;
+}
+
+struct Span
+{
+  Uint8** begin()
+  {
+    return nullptr;
+  }
+
+  Uint8** end()
+  {
+    return nullptr;
+  }
+};
+
+vector<Span> getSpans(const Run& run) {
+  vector<Span> spans;
+
+  return spans;
+}
+
+void prettySort2(Image& image, const Vector2f& mouse, int mode)
+{
+  for (auto run : getRuns(image)) {
+    for (auto span : getSpans(run)) {
+      std::sort(span.begin(), span.end(), pixelCmp);
+    }
+  }
+}
+
 void prettySort(Image& image, float mouseX, float mouseY, int mode)
 {
     const int width = image.getSize().x;
@@ -327,11 +447,11 @@ void prettySort(Image& image, float mouseX, float mouseY, int mode)
     }
 
     for (int row = 0; row < height; ++row) {
-        sortRow(image, width, row, mode, 255 * mouseX);
+        sortRow(image, row, mode, 255 * mouseX);
     }
     
     for (int col = 0; col < width; ++col) {
-        sortCol(image, height, col, mode, 255 * mouseY);
+        sortCol(image, col, mode, 255 * mouseY);
     }
 }
 
@@ -339,6 +459,8 @@ namespace sfe {
     void dumpAvailableDemuxers();
     void dumpAvailableDecoders();
 }
+
+int main2();
 
 int main(int, char const**)
 {
@@ -436,9 +558,8 @@ int main(int, char const**)
             movie.openFromFile(activeMedia.filename);
             
             texture.create(movie.getSize().x, movie.getSize().y);
-            movieSprite.setTexture(texture);
+            movieSprite.setTexture(texture, true);
             movieSprite.setOrigin(movie.getSize().x/2.0f, movie.getSize().y/2.0f);
-            movieSprite.rotate(90);
             movieSprite.setPosition(window.getSize().x/2.0f, window.getSize().y/2.0f);
         }
         
@@ -452,7 +573,8 @@ int main(int, char const**)
 
         movie.update();
         Image imageCopy = movie.getCurrentImage().copyToImage();
-        prettySort(imageCopy, mouseX, mouseY, mode);
+        // prettySort(imageCopy, mouseX, mouseY, mode);
+        prettySort2(imageCopy, Vector2f(mouseX, mouseY), mode);
         texture.update(imageCopy);
 
         window.clear();

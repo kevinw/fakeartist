@@ -15,7 +15,21 @@
 		0A0A41071A6C768B00AA18D6 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A0A41061A6C768B00AA18D6 /* icon.png */; };
 		0A1355E11A7153B700D82DE4 /* platform_mac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1355DF1A7153B700D82DE4 /* platform_mac.cpp */; };
 		0A1F2F691A6EB11200F817B8 /* legos.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0A1F2F681A6EB11200F817B8 /* legos.jpg */; };
-		0A1F2F6F1A6F30E300F817B8 /* sfeMovie.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A1F2F6A1A6F246A00F817B8 /* sfeMovie.framework */; };
+		0AE9DE3D1A793475007B9E9A /* pixelsort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AE9DE3C1A793475007B9E9A /* pixelsort.cpp */; };
+		0AF9A4FB1A7A714F00F50FF5 /* Demuxer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9A4E81A7A714F00F50FF5 /* Demuxer.cpp */; };
+		0AF9A4FC1A7A714F00F50FF5 /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9A4EA1A7A714F00F50FF5 /* Log.cpp */; };
+		0AF9A4FD1A7A714F00F50FF5 /* Macros.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9A4EC1A7A714F00F50FF5 /* Macros.cpp */; };
+		0AF9A4FE1A7A714F00F50FF5 /* Movie.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9A4EE1A7A714F00F50FF5 /* Movie.cpp */; };
+		0AF9A4FF1A7A714F00F50FF5 /* MovieImpl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9A4F01A7A714F00F50FF5 /* MovieImpl.cpp */; };
+		0AF9A5001A7A714F00F50FF5 /* Stream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9A4F21A7A714F00F50FF5 /* Stream.cpp */; };
+		0AF9A5011A7A714F00F50FF5 /* Timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9A4F41A7A714F00F50FF5 /* Timer.cpp */; };
+		0AF9A5021A7A714F00F50FF5 /* Utilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9A4F61A7A714F00F50FF5 /* Utilities.cpp */; };
+		0AF9A5031A7A714F00F50FF5 /* VideoStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9A4F81A7A714F00F50FF5 /* VideoStream.cpp */; };
+		0AF9A5091A7A742700F50FF5 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF9A5041A7A742700F50FF5 /* libavcodec.a */; };
+		0AF9A50A1A7A742700F50FF5 /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF9A5051A7A742700F50FF5 /* libavfilter.a */; };
+		0AF9A50B1A7A742700F50FF5 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF9A5061A7A742700F50FF5 /* libavformat.a */; };
+		0AF9A50C1A7A742700F50FF5 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF9A5071A7A742700F50FF5 /* libavutil.a */; };
+		0AF9A50D1A7A742700F50FF5 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF9A5081A7A742700F50FF5 /* libswscale.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,7 +45,31 @@
 		0A1355DF1A7153B700D82DE4 /* platform_mac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = platform_mac.cpp; sourceTree = "<group>"; };
 		0A1355E21A7153E600D82DE4 /* platform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = platform.h; sourceTree = "<group>"; };
 		0A1F2F681A6EB11200F817B8 /* legos.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = legos.jpg; sourceTree = "<group>"; };
-		0A1F2F6A1A6F246A00F817B8 /* sfeMovie.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = sfeMovie.framework; path = ../../../../Library/Frameworks/sfeMovie.framework; sourceTree = "<group>"; };
+		0AE9DE3C1A793475007B9E9A /* pixelsort.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pixelsort.cpp; sourceTree = "<group>"; };
+		0AF9A4E81A7A714F00F50FF5 /* Demuxer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Demuxer.cpp; path = video/Demuxer.cpp; sourceTree = "<group>"; };
+		0AF9A4E91A7A714F00F50FF5 /* Demuxer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Demuxer.hpp; path = video/Demuxer.hpp; sourceTree = "<group>"; };
+		0AF9A4EA1A7A714F00F50FF5 /* Log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Log.cpp; path = video/Log.cpp; sourceTree = "<group>"; };
+		0AF9A4EB1A7A714F00F50FF5 /* Log.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Log.hpp; path = video/Log.hpp; sourceTree = "<group>"; };
+		0AF9A4EC1A7A714F00F50FF5 /* Macros.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Macros.cpp; path = video/Macros.cpp; sourceTree = "<group>"; };
+		0AF9A4ED1A7A714F00F50FF5 /* Macros.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Macros.hpp; path = video/Macros.hpp; sourceTree = "<group>"; };
+		0AF9A4EE1A7A714F00F50FF5 /* Movie.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Movie.cpp; path = video/Movie.cpp; sourceTree = "<group>"; };
+		0AF9A4EF1A7A714F00F50FF5 /* Movie.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Movie.hpp; path = video/Movie.hpp; sourceTree = "<group>"; };
+		0AF9A4F01A7A714F00F50FF5 /* MovieImpl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MovieImpl.cpp; path = video/MovieImpl.cpp; sourceTree = "<group>"; };
+		0AF9A4F11A7A714F00F50FF5 /* MovieImpl.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = MovieImpl.hpp; path = video/MovieImpl.hpp; sourceTree = "<group>"; };
+		0AF9A4F21A7A714F00F50FF5 /* Stream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Stream.cpp; path = video/Stream.cpp; sourceTree = "<group>"; };
+		0AF9A4F31A7A714F00F50FF5 /* Stream.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Stream.hpp; path = video/Stream.hpp; sourceTree = "<group>"; };
+		0AF9A4F41A7A714F00F50FF5 /* Timer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Timer.cpp; path = video/Timer.cpp; sourceTree = "<group>"; };
+		0AF9A4F51A7A714F00F50FF5 /* Timer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Timer.hpp; path = video/Timer.hpp; sourceTree = "<group>"; };
+		0AF9A4F61A7A714F00F50FF5 /* Utilities.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Utilities.cpp; path = video/Utilities.cpp; sourceTree = "<group>"; };
+		0AF9A4F71A7A714F00F50FF5 /* Utilities.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Utilities.hpp; path = video/Utilities.hpp; sourceTree = "<group>"; };
+		0AF9A4F81A7A714F00F50FF5 /* VideoStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VideoStream.cpp; path = video/VideoStream.cpp; sourceTree = "<group>"; };
+		0AF9A4F91A7A714F00F50FF5 /* VideoStream.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = VideoStream.hpp; path = video/VideoStream.hpp; sourceTree = "<group>"; };
+		0AF9A4FA1A7A714F00F50FF5 /* Visibility.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Visibility.hpp; path = video/Visibility.hpp; sourceTree = "<group>"; };
+		0AF9A5041A7A742700F50FF5 /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = ../../../../usr/local/Cellar/ffmpeg/2.5.2/lib/libavcodec.a; sourceTree = "<group>"; };
+		0AF9A5051A7A742700F50FF5 /* libavfilter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavfilter.a; path = ../../../../usr/local/Cellar/ffmpeg/2.5.2/lib/libavfilter.a; sourceTree = "<group>"; };
+		0AF9A5061A7A742700F50FF5 /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = ../../../../usr/local/Cellar/ffmpeg/2.5.2/lib/libavformat.a; sourceTree = "<group>"; };
+		0AF9A5071A7A742700F50FF5 /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavutil.a; path = ../../../../usr/local/Cellar/ffmpeg/2.5.2/lib/libavutil.a; sourceTree = "<group>"; };
+		0AF9A5081A7A742700F50FF5 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = ../../../../usr/local/Cellar/ffmpeg/2.5.2/lib/libswscale.a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,7 +77,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0A1F2F6F1A6F30E300F817B8 /* sfeMovie.framework in Frameworks */,
+				0AF9A50B1A7A742700F50FF5 /* libavformat.a in Frameworks */,
+				0AF9A50D1A7A742700F50FF5 /* libswscale.a in Frameworks */,
+				0AF9A50A1A7A742700F50FF5 /* libavfilter.a in Frameworks */,
+				0AF9A50C1A7A742700F50FF5 /* libavutil.a in Frameworks */,
+				0AF9A5091A7A742700F50FF5 /* libavcodec.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -49,7 +91,11 @@
 		0A0A40EB1A6C768B00AA18D6 = {
 			isa = PBXGroup;
 			children = (
-				0A1F2F6A1A6F246A00F817B8 /* sfeMovie.framework */,
+				0AF9A5041A7A742700F50FF5 /* libavcodec.a */,
+				0AF9A5051A7A742700F50FF5 /* libavfilter.a */,
+				0AF9A5061A7A742700F50FF5 /* libavformat.a */,
+				0AF9A5071A7A742700F50FF5 /* libavutil.a */,
+				0AF9A5081A7A742700F50FF5 /* libswscale.a */,
 				0A0A40F71A6C768B00AA18D6 /* pixelsort */,
 				0A0A40F61A6C768B00AA18D6 /* Products */,
 			);
@@ -66,6 +112,8 @@
 		0A0A40F71A6C768B00AA18D6 /* pixelsort */ = {
 			isa = PBXGroup;
 			children = (
+				0AF9A4C21A7A70B700F50FF5 /* video */,
+				0AE9DE3C1A793475007B9E9A /* pixelsort.cpp */,
 				0A0A40FA1A6C768B00AA18D6 /* ResourcePath.mm */,
 				0A0A40FC1A6C768B00AA18D6 /* ResourcePath.hpp */,
 				0A0A40FD1A6C768B00AA18D6 /* main.cpp */,
@@ -95,6 +143,32 @@
 				0A0A41061A6C768B00AA18D6 /* icon.png */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		0AF9A4C21A7A70B700F50FF5 /* video */ = {
+			isa = PBXGroup;
+			children = (
+				0AF9A4E81A7A714F00F50FF5 /* Demuxer.cpp */,
+				0AF9A4E91A7A714F00F50FF5 /* Demuxer.hpp */,
+				0AF9A4EA1A7A714F00F50FF5 /* Log.cpp */,
+				0AF9A4EB1A7A714F00F50FF5 /* Log.hpp */,
+				0AF9A4EC1A7A714F00F50FF5 /* Macros.cpp */,
+				0AF9A4ED1A7A714F00F50FF5 /* Macros.hpp */,
+				0AF9A4EE1A7A714F00F50FF5 /* Movie.cpp */,
+				0AF9A4EF1A7A714F00F50FF5 /* Movie.hpp */,
+				0AF9A4F01A7A714F00F50FF5 /* MovieImpl.cpp */,
+				0AF9A4F11A7A714F00F50FF5 /* MovieImpl.hpp */,
+				0AF9A4F21A7A714F00F50FF5 /* Stream.cpp */,
+				0AF9A4F31A7A714F00F50FF5 /* Stream.hpp */,
+				0AF9A4F41A7A714F00F50FF5 /* Timer.cpp */,
+				0AF9A4F51A7A714F00F50FF5 /* Timer.hpp */,
+				0AF9A4F61A7A714F00F50FF5 /* Utilities.cpp */,
+				0AF9A4F71A7A714F00F50FF5 /* Utilities.hpp */,
+				0AF9A4F81A7A714F00F50FF5 /* VideoStream.cpp */,
+				0AF9A4F91A7A714F00F50FF5 /* VideoStream.hpp */,
+				0AF9A4FA1A7A714F00F50FF5 /* Visibility.hpp */,
+			);
+			name = video;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -185,7 +259,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AF9A4FC1A7A714F00F50FF5 /* Log.cpp in Sources */,
+				0AF9A4FD1A7A714F00F50FF5 /* Macros.cpp in Sources */,
+				0AF9A5021A7A714F00F50FF5 /* Utilities.cpp in Sources */,
+				0AF9A4FE1A7A714F00F50FF5 /* Movie.cpp in Sources */,
+				0AE9DE3D1A793475007B9E9A /* pixelsort.cpp in Sources */,
+				0AF9A4FB1A7A714F00F50FF5 /* Demuxer.cpp in Sources */,
+				0AF9A5011A7A714F00F50FF5 /* Timer.cpp in Sources */,
 				0A0A40FE1A6C768B00AA18D6 /* main.cpp in Sources */,
+				0AF9A5031A7A714F00F50FF5 /* VideoStream.cpp in Sources */,
+				0AF9A4FF1A7A714F00F50FF5 /* MovieImpl.cpp in Sources */,
+				0AF9A5001A7A714F00F50FF5 /* Stream.cpp in Sources */,
 				0A1355E11A7153B700D82DE4 /* platform_mac.cpp in Sources */,
 				0A0A40FB1A6C768B00AA18D6 /* ResourcePath.mm in Sources */,
 			);
@@ -298,6 +382,10 @@
 				);
 				INFOPLIST_FILE = "pixelsort/pixelsort-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/ffmpeg/2.5.2/lib,
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALID_ARCHS = x86_64;
@@ -314,6 +402,10 @@
 				);
 				INFOPLIST_FILE = "pixelsort/pixelsort-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					/usr/local/Cellar/ffmpeg/2.5.2/lib,
+				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				VALID_ARCHS = x86_64;
