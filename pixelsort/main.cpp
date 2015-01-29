@@ -43,16 +43,23 @@ static vector<Vector2i> getCirclePixels(int x0, int y0, int radius)
 
     vector<Vector2i> results;
     
+    
     while(x >= y)
     {
-        results.push_back(Vector2i(x + x0, y + y0));
-        results.push_back(Vector2i(y + x0, x + y0));
-        results.push_back(Vector2i(-x + x0, y + y0));
-        results.push_back(Vector2i(-y + x0, x + y0));
-        results.push_back(Vector2i(-x + x0, -y + y0));
-        results.push_back(Vector2i(-y + x0, -x + y0));
-        results.push_back(Vector2i(x + x0, -y + y0));
-        results.push_back(Vector2i(y + x0, -x + y0));
+#ifdef addPixel
+#error "addPixel already defined"
+#endif
+
+#define addPixel(x, y) if ((x) >= 0 && (y) >= 0) results.push_back(Vector2i((x), (y)));
+        addPixel(x + x0, y + y0);
+        addPixel(y + x0, x + y0);
+        addPixel(-x + x0, y + y0);
+        addPixel(-y + x0, x + y0);
+        addPixel(-x + x0, -y + y0);
+        addPixel(-y + x0, -x + y0);
+        addPixel(x + x0, -y + y0);
+        addPixel(y + x0, -x + y0);
+#undef addPixel
         y++;
         if (radiusError < 0)
         {
@@ -74,8 +81,18 @@ vector<VectorPixels> getConcentricCircles(const FloatRect& rect)
     Vector2f center = {rect.left + rect.width/2, rect.top + rect.height/2};
     
     vector<VectorPixels> results;
-    for (Uint32 radius = 1; radius < max(rect.width, rect.height); ++radius) {
-        results.push_back(getCirclePixels(center.x, center.y, radius));
+    for (Uint32 radius = 1; radius < min(rect.width, rect.height); ++radius) {
+        VectorPixels circle = getCirclePixels(center.x, center.y, radius);
+        
+        bool valid = true;
+        for (auto pixel : circle) {
+            if (!rect.contains(pixel.x, pixel.y)) {
+                valid = false;
+            }
+        }
+        
+        if (valid)
+            results.push_back(circle);
     }
     
     return results;
@@ -244,10 +261,12 @@ Color getPixelSafe(Image& image, Vector2i point) {
 
 void sortRun(Image& image, const VectorPixels& run, Uint8 blackValue)
 {
-    std::vector<Color> unsorted;
+    std::vector<Uint32> unsorted;
     
     int index = 0;
     int indexEnd = 0;
+    Uint8* pixels = const_cast<Uint8*>(image.getPixelsPtr());
+    Uint32 pixelsWidth = image.getSize().x;
     while (indexEnd < run.size()) {
         index = getFirstNotBlackRun(image, run, index, blackValue);
         indexEnd = getNextBlackRun(image, run, index, blackValue);
@@ -260,18 +279,15 @@ void sortRun(Image& image, const VectorPixels& run, Uint8 blackValue)
         unsorted.resize(sortLength);
         
         for (int i = 0; i < sortLength; ++i) {
-            unsorted[i] = getPixelSafe(image, run[index+i]);
+            const Vector2i& p = run[index + i];
+            unsorted[i] = *reinterpret_cast<Uint32*>(&pixels[(p.y * pixelsWidth + p.x) * 4]);
         }
         
-        std::sort(begin(unsorted), end(unsorted), colorCmp);
+        std::sort(begin(unsorted), end(unsorted));
         
         for (int i = 0; i < sortLength; ++i) {
-            int x = run[index + i].x;
-            int y = run[index + i].y;
-            if (x < 0 || y < 0 || x >= image.getSize().x || y >= image.getSize().y)
-                continue;
-            
-            image.setPixel(x, y, unsorted[i]);
+            const Vector2i& p = run[index + i];
+            *reinterpret_cast<Uint32*>(&pixels[(p.y * pixelsWidth + p.x) * 4]) = unsorted[i];
         }
         
         index = indexEnd + 1;
@@ -420,7 +436,6 @@ void prettySort(Image& image, float mouseX, float mouseY)
     const int width = image.getSize().x;
     const int height = image.getSize().y;
     
-    if (0)
     for (auto run : getConcentricCircles(FloatRect(0, 0, image.getSize().x, image.getSize().y))) {
         sortRun(image, run, 255 - 255 * mouseX);
     }
