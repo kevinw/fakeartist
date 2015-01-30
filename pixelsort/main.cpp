@@ -21,6 +21,7 @@
 #include <vector>
 #include <iostream>
 #include <algorithm>
+#include <sstream>
 
 #include "ResourcePath.hpp"
 #include "platform.h"
@@ -581,8 +582,6 @@ namespace sfe {
     void dumpAvailableDecoders();
 }
 
-int main2();
-
 int main(int, char const**)
 {
     RenderWindow window(VideoMode(800, 600), "fake artist");
@@ -604,6 +603,10 @@ int main(int, char const**)
     Font font;
     if (!font.loadFromFile(resourcePath() + "sansation.ttf"))
         return EXIT_FAILURE;
+
+    sf::String str("hello world");
+    sf::Text text;
+    text.setFont(font);
 
     Texture texture;
     Sprite movieSprite;
@@ -631,6 +634,7 @@ int main(int, char const**)
     Uint32 mediaIndex = medias.size() - 1;
 
     sf::Clock clock;
+    float lastTime = 0;
 
     bool updateMedia = true;
 
@@ -691,10 +695,18 @@ int main(int, char const**)
         prettySort(imageCopy, mouseX, mouseY);
         // prettySort2(imageCopy, Vector2f(mouseX, mouseY));
         texture.update(imageCopy);
-
+        
         window.clear();
         window.draw(movieSprite);
+        window.draw(text);
         window.display();
+
+        float currentTime = clock.restart().asSeconds();
+        float fps = 1.f / (currentTime - lastTime);
+        lastTime = currentTime;
+        std::stringstream ss;
+        ss << fps;
+        text.setString(ss.str());
     }
 
     return EXIT_SUCCESS;

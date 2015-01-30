@@ -9,13 +9,9 @@
 /* Begin PBXBuildFile section */
 		0A0A40FB1A6C768B00AA18D6 /* ResourcePath.mm in Sources */ = {isa = PBXBuildFile; fileRef = 0A0A40FA1A6C768B00AA18D6 /* ResourcePath.mm */; };
 		0A0A40FE1A6C768B00AA18D6 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A0A40FD1A6C768B00AA18D6 /* main.cpp */; };
-		0A0A41011A6C768B00AA18D6 /* cute_image.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0A0A41001A6C768B00AA18D6 /* cute_image.jpg */; };
-		0A0A41031A6C768B00AA18D6 /* nice_music.ogg in Resources */ = {isa = PBXBuildFile; fileRef = 0A0A41021A6C768B00AA18D6 /* nice_music.ogg */; };
 		0A0A41051A6C768B00AA18D6 /* sansation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0A0A41041A6C768B00AA18D6 /* sansation.ttf */; };
 		0A0A41071A6C768B00AA18D6 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A0A41061A6C768B00AA18D6 /* icon.png */; };
 		0A1355E11A7153B700D82DE4 /* platform_mac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1355DF1A7153B700D82DE4 /* platform_mac.cpp */; };
-		0A1F2F691A6EB11200F817B8 /* legos.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0A1F2F681A6EB11200F817B8 /* legos.jpg */; };
-		0AE9DE3D1A793475007B9E9A /* pixelsort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AE9DE3C1A793475007B9E9A /* pixelsort.cpp */; };
 		0AF9A4FB1A7A714F00F50FF5 /* Demuxer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9A4E81A7A714F00F50FF5 /* Demuxer.cpp */; };
 		0AF9A4FC1A7A714F00F50FF5 /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9A4EA1A7A714F00F50FF5 /* Log.cpp */; };
 		0AF9A4FD1A7A714F00F50FF5 /* Macros.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9A4EC1A7A714F00F50FF5 /* Macros.cpp */; };
@@ -38,14 +34,10 @@
 		0A0A40FA1A6C768B00AA18D6 /* ResourcePath.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = ResourcePath.mm; sourceTree = "<group>"; };
 		0A0A40FC1A6C768B00AA18D6 /* ResourcePath.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.h; path = ResourcePath.hpp; sourceTree = "<group>"; };
 		0A0A40FD1A6C768B00AA18D6 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
-		0A0A41001A6C768B00AA18D6 /* cute_image.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = cute_image.jpg; sourceTree = "<group>"; };
-		0A0A41021A6C768B00AA18D6 /* nice_music.ogg */ = {isa = PBXFileReference; lastKnownFileType = file; path = nice_music.ogg; sourceTree = "<group>"; };
 		0A0A41041A6C768B00AA18D6 /* sansation.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = sansation.ttf; sourceTree = "<group>"; };
 		0A0A41061A6C768B00AA18D6 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		0A1355DF1A7153B700D82DE4 /* platform_mac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = platform_mac.cpp; sourceTree = "<group>"; };
 		0A1355E21A7153E600D82DE4 /* platform.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = platform.h; sourceTree = "<group>"; };
-		0A1F2F681A6EB11200F817B8 /* legos.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = legos.jpg; sourceTree = "<group>"; };
-		0AE9DE3C1A793475007B9E9A /* pixelsort.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pixelsort.cpp; sourceTree = "<group>"; };
 		0AF9A4E81A7A714F00F50FF5 /* Demuxer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Demuxer.cpp; path = video/Demuxer.cpp; sourceTree = "<group>"; };
 		0AF9A4E91A7A714F00F50FF5 /* Demuxer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Demuxer.hpp; path = video/Demuxer.hpp; sourceTree = "<group>"; };
 		0AF9A4EA1A7A714F00F50FF5 /* Log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Log.cpp; path = video/Log.cpp; sourceTree = "<group>"; };
@@ -65,11 +57,11 @@
 		0AF9A4F81A7A714F00F50FF5 /* VideoStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VideoStream.cpp; path = video/VideoStream.cpp; sourceTree = "<group>"; };
 		0AF9A4F91A7A714F00F50FF5 /* VideoStream.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = VideoStream.hpp; path = video/VideoStream.hpp; sourceTree = "<group>"; };
 		0AF9A4FA1A7A714F00F50FF5 /* Visibility.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Visibility.hpp; path = video/Visibility.hpp; sourceTree = "<group>"; };
-		0AF9A5041A7A742700F50FF5 /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = ../../../../usr/local/Cellar/ffmpeg/2.5.2/lib/libavcodec.a; sourceTree = "<group>"; };
-		0AF9A5051A7A742700F50FF5 /* libavfilter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavfilter.a; path = ../../../../usr/local/Cellar/ffmpeg/2.5.2/lib/libavfilter.a; sourceTree = "<group>"; };
-		0AF9A5061A7A742700F50FF5 /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = ../../../../usr/local/Cellar/ffmpeg/2.5.2/lib/libavformat.a; sourceTree = "<group>"; };
-		0AF9A5071A7A742700F50FF5 /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavutil.a; path = ../../../../usr/local/Cellar/ffmpeg/2.5.2/lib/libavutil.a; sourceTree = "<group>"; };
-		0AF9A5081A7A742700F50FF5 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = ../../../../usr/local/Cellar/ffmpeg/2.5.2/lib/libswscale.a; sourceTree = "<group>"; };
+		0AF9A5041A7A742700F50FF5 /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = /usr/local/Cellar/ffmpeg/2.5.2/lib/libavcodec.a; sourceTree = "<absolute>"; };
+		0AF9A5051A7A742700F50FF5 /* libavfilter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavfilter.a; path = /usr/local/Cellar/ffmpeg/2.5.2/lib/libavfilter.a; sourceTree = "<absolute>"; };
+		0AF9A5061A7A742700F50FF5 /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = /usr/local/Cellar/ffmpeg/2.5.2/lib/libavformat.a; sourceTree = "<absolute>"; };
+		0AF9A5071A7A742700F50FF5 /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavutil.a; path = /usr/local/Cellar/ffmpeg/2.5.2/lib/libavutil.a; sourceTree = "<absolute>"; };
+		0AF9A5081A7A742700F50FF5 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = /usr/local/Cellar/ffmpeg/2.5.2/lib/libswscale.a; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -91,11 +83,7 @@
 		0A0A40EB1A6C768B00AA18D6 = {
 			isa = PBXGroup;
 			children = (
-				0AF9A5041A7A742700F50FF5 /* libavcodec.a */,
-				0AF9A5051A7A742700F50FF5 /* libavfilter.a */,
-				0AF9A5061A7A742700F50FF5 /* libavformat.a */,
-				0AF9A5071A7A742700F50FF5 /* libavutil.a */,
-				0AF9A5081A7A742700F50FF5 /* libswscale.a */,
+				0A1D57AA1A7BE5D00079F7BB /* lib */,
 				0A0A40F71A6C768B00AA18D6 /* pixelsort */,
 				0A0A40F61A6C768B00AA18D6 /* Products */,
 			);
@@ -112,15 +100,11 @@
 		0A0A40F71A6C768B00AA18D6 /* pixelsort */ = {
 			isa = PBXGroup;
 			children = (
+				0A1D57AB1A7BE5DE0079F7BB /* mac */,
 				0AF9A4C21A7A70B700F50FF5 /* video */,
-				0AE9DE3C1A793475007B9E9A /* pixelsort.cpp */,
-				0A0A40FA1A6C768B00AA18D6 /* ResourcePath.mm */,
-				0A0A40FC1A6C768B00AA18D6 /* ResourcePath.hpp */,
 				0A0A40FD1A6C768B00AA18D6 /* main.cpp */,
 				0A0A40FF1A6C768B00AA18D6 /* Resources */,
 				0A0A40F81A6C768B00AA18D6 /* Supporting Files */,
-				0A1355DF1A7153B700D82DE4 /* platform_mac.cpp */,
-				0A1355E21A7153E600D82DE4 /* platform.h */,
 			);
 			path = pixelsort;
 			sourceTree = "<group>";
@@ -136,13 +120,33 @@
 		0A0A40FF1A6C768B00AA18D6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				0A1F2F681A6EB11200F817B8 /* legos.jpg */,
-				0A0A41001A6C768B00AA18D6 /* cute_image.jpg */,
-				0A0A41021A6C768B00AA18D6 /* nice_music.ogg */,
 				0A0A41041A6C768B00AA18D6 /* sansation.ttf */,
 				0A0A41061A6C768B00AA18D6 /* icon.png */,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		0A1D57AA1A7BE5D00079F7BB /* lib */ = {
+			isa = PBXGroup;
+			children = (
+				0AF9A5041A7A742700F50FF5 /* libavcodec.a */,
+				0AF9A5051A7A742700F50FF5 /* libavfilter.a */,
+				0AF9A5061A7A742700F50FF5 /* libavformat.a */,
+				0AF9A5071A7A742700F50FF5 /* libavutil.a */,
+				0AF9A5081A7A742700F50FF5 /* libswscale.a */,
+			);
+			name = lib;
+			sourceTree = "<group>";
+		};
+		0A1D57AB1A7BE5DE0079F7BB /* mac */ = {
+			isa = PBXGroup;
+			children = (
+				0A1355DF1A7153B700D82DE4 /* platform_mac.cpp */,
+				0A1355E21A7153E600D82DE4 /* platform.h */,
+				0A0A40FA1A6C768B00AA18D6 /* ResourcePath.mm */,
+				0A0A40FC1A6C768B00AA18D6 /* ResourcePath.hpp */,
+			);
+			name = mac;
 			sourceTree = "<group>";
 		};
 		0AF9A4C21A7A70B700F50FF5 /* video */ = {
@@ -230,9 +234,6 @@
 			files = (
 				0A0A41071A6C768B00AA18D6 /* icon.png in Resources */,
 				0A0A41051A6C768B00AA18D6 /* sansation.ttf in Resources */,
-				0A1F2F691A6EB11200F817B8 /* legos.jpg in Resources */,
-				0A0A41031A6C768B00AA18D6 /* nice_music.ogg in Resources */,
-				0A0A41011A6C768B00AA18D6 /* cute_image.jpg in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -263,7 +264,6 @@
 				0AF9A4FD1A7A714F00F50FF5 /* Macros.cpp in Sources */,
 				0AF9A5021A7A714F00F50FF5 /* Utilities.cpp in Sources */,
 				0AF9A4FE1A7A714F00F50FF5 /* Movie.cpp in Sources */,
-				0AE9DE3D1A793475007B9E9A /* pixelsort.cpp in Sources */,
 				0AF9A4FB1A7A714F00F50FF5 /* Demuxer.cpp in Sources */,
 				0AF9A5011A7A714F00F50FF5 /* Timer.cpp in Sources */,
 				0A0A40FE1A6C768B00AA18D6 /* main.cpp in Sources */,
