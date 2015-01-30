@@ -1,22 +1,9 @@
-//
-// TODO: 
-//
-// use a square texture instead of checking bounds
-//
-
-// Note that the "Run Script" build phase will copy the required frameworks
-// or dylibs to your application bundle so you can execute it on any OS X
-// computer.
-//
-// Your resource files (images, sounds, fonts, ...) are also copied to your
-// application bundle. To get the path to these resource, use the helper
-// method resourcePath() from ResourcePath.hpp
-
 #include <SFML/Audio.hpp>
 #include <SFML/Graphics.hpp>
 #include "video/Movie.hpp"
 
 #include <cstdlib>
+#include <cmath>
 
 #include <vector>
 #include <iostream>
@@ -31,6 +18,7 @@ using namespace std;
 
 typedef vector<Vector2i> VectorPixels;
 
+static const bool showFps = false;
 
 // image ->
 
@@ -108,32 +96,54 @@ float randomFloat() {
 }
 
 
+struct State
+{
+    float mouseX;
+    float mouseY;
+    float time;
+    
+    bool spirals = false;
+    bool random = false;
+    bool cols = false;
+    bool rows = false;
+    bool diagonals = true;
+};
 
 Vector2i randomPoint(const FloatRect& rect)
 {
-    return Vector2i(randomFloat() * rect.width + rect.left,
-                    randomFloat() * rect.height + rect.top);
+    return Vector2i(randomFloat() * (float)rect.width + rect.left,
+                    randomFloat() * (float)rect.height + rect.top);
 }
 
-Vector2i randomVelocity()
+Vector2f randomVelocity()
 {
-    return Vector2i(randomFloat()*2-1, randomFloat()*2-1);
+    return Vector2f(randomFloat() * 2.0f - 1.0f, randomFloat() * 2.0f - 1.0f);
+}
+
+void testRandom() {
+    for (int i = 0; i < 10; ++i)
+    {
+        Vector2i v(randomVelocity());
+        cout << v.x << ", " << v.y << endl;
+    }
 }
 
 VectorPixels getRandomWalk(const FloatRect& rect)
 {
     VectorPixels results;
-    Vector2i p(randomPoint(rect));
-    Vector2i velocity(randomVelocity());
+    Vector2f p(randomPoint(rect));
+    Vector2f velocity(randomVelocity());
     
     int N = randomFloat() * 500;
     
     for (int i = 0; i < N; ++i) {
-        int length = randomFloat() * 50;
+        int length = randomFloat() * 30;
         while(length-- > 0) {
-            if (rect.contains(p.x, p.y)) {
-                results.push_back(p);
-                
+            Vector2i nearestInt(round(p.x), round(p.y));
+            if (rect.contains(nearestInt.x, nearestInt.y)) {
+                if (results.size() == 0 || results[results.size()-1] != nearestInt) {
+                    results.push_back(nearestInt);
+                }
             }
             p += velocity;
         }
@@ -146,7 +156,7 @@ VectorPixels getRandomWalk(const FloatRect& rect)
 vector<VectorPixels> getRandomWalks(const FloatRect& rect)
 {
     vector<VectorPixels> results;
-    int count = 200;
+    int count = 500;
     for (int i = 0; i < count; ++i) {
         results.push_back(getRandomWalk(rect));
     }
@@ -227,6 +237,38 @@ vector<VectorPixels> getManySpirals(const FloatRect& rect, Vector2u size)
     return results;
 }
 
+VectorPixels getDiagonal(const FloatRect& rect, const Vector2u& pos, float factor)
+{
+    Vector2f p(pos.x, pos.y);
+    VectorPixels results;
+    int length = 2 * max(rect.width, rect.height);
+    Vector2f vel(sin(factor), cos(factor));
+    bool started = false;
+    while (length--) {
+        Vector2i i(p.x, p.y);
+        if (rect.contains(i.x, i.y)) {
+            started = true;
+            results.push_back(i);
+        } else if (started) {
+            break;
+        }
+        p.x += vel.x;
+        p.y += vel.y;
+    }
+    return results;
+}
+
+vector<VectorPixels> getDiagonals(const FloatRect& rect, float factor)
+{
+    vector<VectorPixels> results;
+    for (int col = -rect.width/2; col < rect.width*2; ++ col) {
+        results.push_back(getDiagonal(rect, Vector2u(col, 0), factor));
+    }
+    for (int row = -rect.height/2; row < rect.height*2; ++row) {
+        results.push_back(getDiagonal(rect, Vector2u(0, row), factor));
+    }
+    return results;
+}
 
 vector<VectorPixels> getManyCircles(const FloatRect& rect, Vector2u size)
 {
@@ -387,14 +429,13 @@ int comp( const void* a, const void* b ) {
     return ( *( Uint32* )a - *( Uint32* )b );
 }
 
-void sortRun(Image& image, const VectorPixels& run, Uint8 blackValue)
+
+void sortRun(Uint32* pixels, const Vector2u& size, const VectorPixels& run, Uint8 blackValue)
 {
     std::vector<Uint32> unsorted;
     
     int index = 0;
     int indexEnd = 0;
-    Uint32* pixels = getWritablePixels(image);
-    const Vector2u& size = image.getSize();
     while (indexEnd < run.size()) {
         index = getFirstNotBlackRun(pixels, size, run, index, blackValue);
         indexEnd = getNextBlackRun(pixels, size, run, index, blackValue);
@@ -404,7 +445,9 @@ void sortRun(Image& image, const VectorPixels& run, Uint8 blackValue)
         int sortLength = indexEnd - index;
         if (sortLength < 0)
             sortLength = 0;
-        unsorted.resize(sortLength);
+
+        if (unsorted.size() < sortLength)
+          unsorted.resize(sortLength);
         
         for (int i = 0; i < sortLength; ++i) {
             const Vector2i& p = run[index + i];
@@ -412,8 +455,6 @@ void sortRun(Image& image, const VectorPixels& run, Uint8 blackValue)
         }
         
         std::sort(begin(unsorted), end(unsorted));
-        //std::qsort(&unsorted[0], unsorted.size(), sizeof( Uint32 ), comp );
-
         
         for (int i = 0; i < sortLength; ++i) {
             const Vector2i& p = run[index + i];
@@ -425,7 +466,13 @@ void sortRun(Image& image, const VectorPixels& run, Uint8 blackValue)
 }
 
 
-
+void sortRuns(Image& image, const vector<VectorPixels>& runs, Uint8 blackValue)
+{
+    Uint32* pixels = getWritablePixels(image);
+    for (auto run : runs) {
+        sortRun(pixels, image.getSize(), run, blackValue);
+    }
+}
 
 void sortCol(Image& image, int column, Uint8 blackValue)
 {
@@ -444,15 +491,14 @@ void sortCol(Image& image, int column, Uint8 blackValue)
         if (y < 0) break;
         
         int sortLength = yend-y;
-        unsorted.resize(sortLength);
+        if (unsorted.size() < sortLength)
+          unsorted.resize(sortLength);
         
         for (int i = 0; i < sortLength; ++i) {
             unsorted[i] = pixels[(y + i) * size.x + x];
         }
         
         std::sort(unsorted.begin(), unsorted.end());
-        //std::qsort(&unsorted[0], unsorted.size(), sizeof( Uint32 ), comp );
-
         
         for (int i = 0; i < sortLength; ++i) {
             pixels[(y + i) * size.x + x] = unsorted[i];
@@ -480,15 +526,14 @@ void sortRow(Image& image, int row, Uint8 blackValue)
         if (x < 0) break;
     
         int sortLength = xend - x;
-        unsorted.resize(sortLength);
+        if (unsorted.size() < sortLength)
+          unsorted.resize(sortLength);
         
         for (int i = 0; i < sortLength; ++i) {
             unsorted[i] = pixels[y * pixelsWidth + (x + i)];
         }
         
         std::sort(unsorted.begin(), unsorted.end());
-        //std::qsort(&unsorted[0], unsorted.size(), sizeof( Uint32 ), comp );
-
         
         for (int i = 0; i < sortLength; ++i) {
             pixels[y * pixelsWidth + (x + i)] = unsorted[i];
@@ -498,92 +543,65 @@ void sortRow(Image& image, int row, Uint8 blackValue)
     }
 }
 
-template <typename T>
-struct ImageIterator
+
+void prettySort(Image& image, const State& state)
 {
-  ImageIterator(Uint8* pixels, T* run)
-    : m_pixels(pixels)
-    , m_run(run)
-  {
-  }
-
-  Uint8* m_pixels;
-  T* m_run;
-};
-
-struct Run
-{
-  Run(Uint8* pixels, Vector2u size, Uint32 row) 
-    : m_pixels(pixels)
-    , m_size(size)
-    , m_row(row)
-  {
-  }
-
-
-  const ImageIterator<Run> begin() {
-    return ImageIterator<Run>(&m_pixels[m_row * m_size.y * 4], this);
-  }
-
-  const ImageIterator<Run> end() {
-    return ImageIterator<Run>(&m_pixels[(m_size.x + m_row * m_size.y) * 4], this);
-  }
-
-  Uint8* m_pixels;
-  Vector2u m_size;
-  Uint32 m_row;
-};
-
-vector<Run> getRuns(Image& image) {
-  vector<Run> runs;
-
-  return runs;
-}
-
-struct Span
-{
-  Uint8** begin()
-  {
-    return nullptr;
-  }
-
-  Uint8** end()
-  {
-    return nullptr;
-  }
-};
-
-vector<Span> getSpans(const Run& run) {
-  vector<Span> spans;
-
-  return spans;
-}
-
-void prettySort(Image& image, float mouseX, float mouseY)
-{
-    const int width = image.getSize().x;
-    const int height = image.getSize().y;
-    
     FloatRect imageRect(0, 0, image.getSize().x, image.getSize().y);
-    for (int col = 0; col < width; ++col) {
-        sortCol(image, col, 255 * mouseY);
+    
+    if (state.cols) {
+        for (int col = 0; col < imageRect.width; ++col) {
+            sortCol(image, col, 255 * state.mouseY);
+        }
     }
 
-    for (int row = 0; row < height; ++row) {
-        sortRow(image, row, 255 * mouseX);
+    if (state.rows) {
+        for (int row = 0; row < imageRect.height; ++row) {
+            sortRow(image, row, 255 * state.mouseX);
+        }
     }
-    for (auto run : getManySpirals(imageRect, Vector2u(mouseX * 400, mouseY * 400))) {
-        sortRun(image, run, mouseX * 255);
+    
+    if (state.spirals) {
+        float f = sin(state.time / 1000 / 5) * 400 + 400;
+        int spiralSize = static_cast<int>(f);
+        auto runs = getManySpirals(imageRect, Vector2u(spiralSize, spiralSize));
+        sortRuns(image, runs, state.mouseX * 255);
+    }
+    
+    if (state.random) {
+        sortRuns(image, getRandomWalks(imageRect), state.mouseX * 255);
+    }
+    
+    if (state.diagonals) {
+        sortRuns(image, getDiagonals(imageRect, state.mouseY), state.mouseX * 255);
     }
 }
+
 
 namespace sfe {
     void dumpAvailableDemuxers();
     void dumpAvailableDecoders();
 }
 
+struct Media
+{
+    enum MediaType
+    {
+        IMAGE,
+        MOVIE
+    };
+    
+    MediaType type;
+    string filename;
+};
+
+float clamp(float v, float minval=0.0f, float maxval=1.0f)
+{
+    return min(maxval, max(minval, v));
+}
+
 int main(int, char const**)
 {
+    testRandom();
     RenderWindow window(VideoMode(800, 600), "fake artist");
     
     Image icon;
@@ -593,37 +611,12 @@ int main(int, char const**)
     window.setIcon(icon.getSize().x, icon.getSize().y, icon.getPixelsPtr());
     window.setFramerateLimit(30);
 
-    // Load a sprite to display
-    Image image;
-    if (!image.loadFromFile(resourcePath() + "legos.jpg"))
-        return EXIT_FAILURE;
-    
     sfe::Movie movie;
-
-    Font font;
-    if (!font.loadFromFile(resourcePath() + "sansation.ttf"))
-        return EXIT_FAILURE;
-
-    sf::String str("hello world");
-    sf::Text text;
-    text.setFont(font);
 
     Texture texture;
     Sprite movieSprite;
 
     vector<string> movieFilenames = findMovies();
-    
-    struct Media
-    {
-        enum MediaType
-        {
-            IMAGE,
-            MOVIE
-        };
-        
-        MediaType type;
-        string filename;
-    };
     
     vector<Media> medias;
     for (auto movieFilename : findMovies()) {
@@ -633,9 +626,8 @@ int main(int, char const**)
     
     Uint32 mediaIndex = medias.size() - 1;
 
-    sf::Clock clock;
-    float lastTime = 0;
-
+    sf::Clock globalClock;
+    State state;
     bool updateMedia = true;
 
     while (window.isOpen()) {
@@ -659,6 +651,21 @@ int main(int, char const**)
                         mediaIndex = (mediaIndex - 1) % medias.size();
                         updateMedia = true;
                         break;
+                    case Keyboard::Num1:
+                        state.diagonals = !state.diagonals;
+                        break;
+                    case Keyboard::Num2:
+                        state.cols = !state.cols;
+                        break;
+                    case Keyboard::Num3:
+                        state.rows = !state.rows;
+                        break;
+                    case Keyboard::Num4:
+                        state.spirals = !state.spirals;
+                        break;
+                    case Keyboard::Num5:
+                        state.random = !state.random;
+                        break;
                     default:
                         break;
                 }
@@ -673,7 +680,6 @@ int main(int, char const**)
             cout << activeMedia.filename << endl;
             
             movie.openFromFile(activeMedia.filename);
-            
             texture.create(movie.getSize().x, movie.getSize().y);
             movieSprite.setTexture(texture, true);
             movieSprite.setOrigin(movie.getSize().x/2.0f, movie.getSize().y/2.0f);
@@ -683,30 +689,23 @@ int main(int, char const**)
         }
         
         if (movie.getStatus() == sfe::Status::Stopped) {
-            cout << "replaying video" << endl;
             movie.play();
         }
         
-        float mouseX = static_cast<float>(Mouse::getPosition(window).x) / window.getSize().x;
-        float mouseY = static_cast<float>(Mouse::getPosition(window).y) / window.getSize().y;
+        state.mouseX = clamp(static_cast<float>(Mouse::getPosition(window).x) / window.getSize().x);
+        state.mouseY = clamp(static_cast<float>(Mouse::getPosition(window).y) / window.getSize().y);
+
+        state.time = globalClock.getElapsedTime().asSeconds();
 
         movie.update();
+        
         Image imageCopy = movie.getCurrentImage().copyToImage();
-        prettySort(imageCopy, mouseX, mouseY);
-        // prettySort2(imageCopy, Vector2f(mouseX, mouseY));
+        prettySort(imageCopy, state);
         texture.update(imageCopy);
         
         window.clear();
         window.draw(movieSprite);
-        window.draw(text);
         window.display();
-
-        float currentTime = clock.restart().asSeconds();
-        float fps = 1.f / (currentTime - lastTime);
-        lastTime = currentTime;
-        std::stringstream ss;
-        ss << fps;
-        text.setString(ss.str());
     }
 
     return EXIT_SUCCESS;
