@@ -102,12 +102,39 @@ struct State
     float mouseY;
     float time;
     
-    bool spirals = false;
-    bool random = false;
+    bool diagonals = true;
     bool cols = false;
     bool rows = false;
-    bool diagonals = true;
+    bool circles = false;
+    bool spirals = false;
+    bool random = false;
 };
+
+static void updateStateFromKeyboard(State& state, Keyboard::Key keyCode)
+{
+    switch (keyCode) {
+        case Keyboard::Num1:
+            state.diagonals = !state.diagonals;
+            break;
+        case Keyboard::Num2:
+            state.cols = !state.cols;
+            break;
+        case Keyboard::Num3:
+            state.rows = !state.rows;
+            break;
+        case Keyboard::Num4:
+            state.circles = !state.circles;
+            break;
+        case Keyboard::Num5:
+            state.spirals = !state.spirals;
+            break;
+        case Keyboard::Num6:
+            state.random = !state.random;
+            break;
+        default:
+            break;
+    }
+}
 
 Vector2i randomPoint(const FloatRect& rect)
 {
@@ -120,20 +147,11 @@ Vector2f randomVelocity()
     return Vector2f(randomFloat() * 2.0f - 1.0f, randomFloat() * 2.0f - 1.0f);
 }
 
-void testRandom() {
-    for (int i = 0; i < 10; ++i)
-    {
-        Vector2i v(randomVelocity());
-        cout << v.x << ", " << v.y << endl;
-    }
-}
-
 VectorPixels getRandomWalk(const FloatRect& rect)
 {
     VectorPixels results;
     Vector2f p(randomPoint(rect));
     Vector2f velocity(randomVelocity());
-    
     int N = randomFloat() * 500;
     
     for (int i = 0; i < N; ++i) {
@@ -150,7 +168,6 @@ VectorPixels getRandomWalk(const FloatRect& rect)
     }
     
     return results;
-    
 }
 
 vector<VectorPixels> getRandomWalks(const FloatRect& rect)
@@ -317,22 +334,6 @@ static inline Uint8 intensityAtPixel(Image& image, int x, int y)
     return (Uint8)((c.r + c.g + c.b) / 3.0f);
 }
 
-Uint32 getFirstNotWhiteX(Image& image, int x, int y, Uint8 whiteValue) {
-    const int width = image.getSize().x;
-    while (intensityAtPixel(image, x, y) > whiteValue)
-        if (++x >= width)
-            return -1;
-    return x;
-}
-
-Uint32 getFirstNotWhiteY(Image& image, int x, int y, Uint8 whiteValue) {
-    const int height = image.getSize().y;
-    while (intensityAtPixel(image, x, y) > whiteValue)
-        if (++y >= height)
-            return -1;
-    return y;
-}
-
 int getFirstNotBlackRun(Uint32* pixels, const Vector2u& size, const VectorPixels& run, int index, Uint8 blackValue)
 {
     if (index >= run.size())
@@ -389,24 +390,6 @@ int getNextBlackRun(Uint32* pixels, const Vector2u& size, const VectorPixels& ru
             return run.size() - 1;
     }
     return index - 1;
-}
-
-Uint32 getNextWhiteX(Image& image, int x, int y, Uint8 whiteValue) {
-    x++;
-    const int width = image.getSize().x;
-    while (intensityAtPixel(image, x, y) < whiteValue)
-        if (++x >= width)
-            return width - 1;
-    return x - 1;
-}
-
-Uint32 getNextWhiteY(Image& image, int x, int y, Uint8 whiteValue) {
-    y++;
-    const int height = image.getSize().y;
-    while (intensityAtPixel(image, x, y) < whiteValue)
-        if (++y >= height)
-            return height - 1;
-    return y - 1;
 }
 
 int getNextBlackY(Uint32* pixels, const Vector2u& size, int _x, int _y, Uint8 blackValue) {
@@ -547,7 +530,11 @@ void sortRow(Image& image, int row, Uint8 blackValue)
 void prettySort(Image& image, const State& state)
 {
     FloatRect imageRect(0, 0, image.getSize().x, image.getSize().y);
-    
+
+    if (state.circles) {
+        sortRuns(image, getManyCircles(imageRect, Vector2u(200, 200)), state.mouseX * 255);
+    }
+   
     if (state.cols) {
         for (int col = 0; col < imageRect.width; ++col) {
             sortCol(image, col, 255 * state.mouseY);
@@ -601,7 +588,6 @@ float clamp(float v, float minval=0.0f, float maxval=1.0f)
 
 int main(int, char const**)
 {
-    testRandom();
     RenderWindow window(VideoMode(800, 600), "fake artist");
     
     Image icon;
@@ -651,24 +637,11 @@ int main(int, char const**)
                         mediaIndex = (mediaIndex - 1) % medias.size();
                         updateMedia = true;
                         break;
-                    case Keyboard::Num1:
-                        state.diagonals = !state.diagonals;
-                        break;
-                    case Keyboard::Num2:
-                        state.cols = !state.cols;
-                        break;
-                    case Keyboard::Num3:
-                        state.rows = !state.rows;
-                        break;
-                    case Keyboard::Num4:
-                        state.spirals = !state.spirals;
-                        break;
-                    case Keyboard::Num5:
-                        state.random = !state.random;
-                        break;
                     default:
                         break;
                 }
+
+                updateStateFromKeyboard(state, event.key.code);
             }
         }
         
