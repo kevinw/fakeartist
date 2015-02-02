@@ -9,9 +9,13 @@
 #include <iostream>
 #include <algorithm>
 #include <sstream>
+#include <thread>
+
 
 #include "ResourcePath.hpp"
 #include "platform.h"
+
+#include <Magick++.h>
 
 using namespace sf;
 using namespace std;
@@ -563,6 +567,15 @@ void prettySort(Image& image, const State& state)
     }
 }
 
+Magick::Image sfmlToMagick(sf::Image& sfImage)
+{
+    const sf::Vector2u size(sfImage.getSize());
+    Magick::Image image(Magick::Geometry(size.x, size.y));
+    image.type(Magick::ImageType::TrueColorType);
+    image.modifyImage();
+    
+}
+
 
 namespace sfe {
     void dumpAvailableDemuxers();
@@ -585,6 +598,16 @@ float clamp(float v, float minval=0.0f, float maxval=1.0f)
 {
     return min(maxval, max(minval, v));
 }
+
+void writeThread(vector<Magick::Image> images, std::string path)
+{
+    cout << "Writing " << path << endl;
+    Magick::writeImages(begin(images), end(images), path);
+    cout << "...finished!" << endl;
+}
+
+
+
 
 int main(int, char const**)
 {
@@ -616,6 +639,12 @@ int main(int, char const**)
     State state;
     bool updateMedia = true;
 
+    Image prettyImage;
+    
+    Magick::InitializeMagick(nullptr);
+    vector<Image> animated;
+    bool recording = false;
+
     while (window.isOpen()) {
         Event event;
         
@@ -623,17 +652,70 @@ int main(int, char const**)
             if (event.type == Event::Closed) {
                 window.close();
             }
+            
+            
+            
+            if (!recording && event.type == Event::KeyPressed && event.key.code == Keyboard::Space) {
+                cout << "Starting to record." << endl;
+                recording = true;
+            } else if (recording && event.type == Event::KeyReleased && event.key.code == Keyboard::Space) {
+                if (animated.size() > 0) {
+                    string path = "/Users/kevin/Desktop/test.gif";
+                    cout << "Writing " << animated.size() << " images to " << path << endl;
+
+                    vector<Magick::Image> magickAnimated;
+                    for (auto sfImage : animated) {
+                        const void* pixels = getWritablePixels(sfImage);
+                        
+                        Magick::Image magickImage(sfImage.getSize().x, sfImage.getSize().y, "RGBA", Magick::StorageType::CharPixel, pixels);
+                        magickImage.animationDelay(1);
+
+                        //magickImage.modifyImage();
+                        //if (double r = movie.getVideoRotation()) {
+                        //    magickImage.rotate(r);
+                        //}
+                        //magickImage.syncPixels();
+                        
+                        /*
+                        Magick::Geometry geometry = magickImage.size();
+                        int w = geometry.width();
+                        int h = geometry.height();
+                        geometry.width(w/2);
+                        geometry.height(h/2);
+                        magickImage.scale(geometry);
+                         */
+                        
+                        magickAnimated.push_back(magickImage);
+                    }
+                    thread saveThread(bind(writeThread, magickAnimated, path));
+                    saveThread.detach();
+                    animated.resize(0);
+                }
+                recording = false;
+            }
+            
+            if (recording) {
+                animated.push_back(prettyImage);
+            }
+            
 
             if (event.type == Event::KeyPressed) {
                 switch (event.key.code) {
                     case Keyboard::Escape:
                         window.close();
                         break;
-                    case Keyboard::Right:
+                    case Keyboard::Return:
+                        if (movie.getStatus() == sfe::Status::Stopped || movie.getStatus() == sfe::Status::Paused) {
+                            movie.play();
+                        } else {
+                            movie.pause();
+                        }
+                        break;
+                    case Keyboard::Down:
                         mediaIndex = (mediaIndex + 1) % medias.size();
                         updateMedia = true;
                         break;
-                    case Keyboard::Left:
+                    case Keyboard::Up:
                         mediaIndex = (mediaIndex - 1) % medias.size();
                         updateMedia = true;
                         break;
@@ -672,9 +754,9 @@ int main(int, char const**)
 
         movie.update();
         
-        Image imageCopy = movie.getCurrentImage().copyToImage();
-        prettySort(imageCopy, state);
-        texture.update(imageCopy);
+        prettyImage = movie.getCurrentImage().copyToImage();
+        prettySort(prettyImage, state);
+        texture.update(prettyImage);
         
         window.clear();
         window.draw(movieSprite);

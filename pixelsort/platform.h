@@ -17,5 +17,6 @@ using std::vector;
 
 vector<string> listDir(const string& dirName);
 vector<string> findMovies();
+string nextFilename();
 
 #endif

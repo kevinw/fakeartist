@@ -11,7 +11,9 @@
 #include <algorithm>
 #include <dirent.h>
 
-static vector<string> ignore= {
+static const string savePath = "~/Desktop";
+
+static vector<string> ignore = {
     ".DS_Store"
 };
 
@@ -38,4 +40,10 @@ vector<string> listDir(const string& dirName)
 vector<string> findMovies()
 {
     return listDir("/Users/kevin/fakeartist/movies");
+}
+
+string nextFilename()
+{
+    return "TODO.png";
+    //savePath += "/" filename;
 }
