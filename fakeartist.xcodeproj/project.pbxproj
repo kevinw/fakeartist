@@ -14,6 +14,11 @@
 		0A1355E11A7153B700D82DE4 /* platform_mac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1355DF1A7153B700D82DE4 /* platform_mac.cpp */; };
 		0A173EDF1A7FA20D0061AA87 /* libGraphicsMagick.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A173EDD1A7FA20D0061AA87 /* libGraphicsMagick.3.dylib */; };
 		0A173EE01A7FA20D0061AA87 /* libGraphicsMagick++.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A173EDE1A7FA20D0061AA87 /* libGraphicsMagick++.3.dylib */; };
+		0A173EE71A8130C30061AA87 /* libopencv_core.2.4.10.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A173EE51A8130C30061AA87 /* libopencv_core.2.4.10.dylib */; };
+		0A173EE81A8130C30061AA87 /* libopencv_highgui.2.4.10.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A173EE61A8130C30061AA87 /* libopencv_highgui.2.4.10.dylib */; };
+		0A173EEA1A8130E00061AA87 /* libopencv_features2d.2.4.10.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A173EE91A8130E00061AA87 /* libopencv_features2d.2.4.10.dylib */; };
+		0A173EEF1A81317C0061AA87 /* libopencv_imgproc.2.4.10.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A173EEE1A81317C0061AA87 /* libopencv_imgproc.2.4.10.dylib */; };
+		0A173EF21A813C9E0061AA87 /* sort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A173EF01A813C9E0061AA87 /* sort.cpp */; };
 		0AF9A4FB1A7A714F00F50FF5 /* Demuxer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9A4E81A7A714F00F50FF5 /* Demuxer.cpp */; };
 		0AF9A4FC1A7A714F00F50FF5 /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9A4EA1A7A714F00F50FF5 /* Log.cpp */; };
 		0AF9A4FD1A7A714F00F50FF5 /* Macros.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9A4EC1A7A714F00F50FF5 /* Macros.cpp */; };
@@ -229,6 +234,12 @@
 		0A173EDC1A7FA1E40061AA87 /* analyze.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = analyze.so; sourceTree = "<group>"; };
 		0A173EDD1A7FA20D0061AA87 /* libGraphicsMagick.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGraphicsMagick.3.dylib; path = ../../../../usr/local/Cellar/graphicsmagick/1.3.20/lib/libGraphicsMagick.3.dylib; sourceTree = "<group>"; };
 		0A173EDE1A7FA20D0061AA87 /* libGraphicsMagick++.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libGraphicsMagick++.3.dylib"; path = "../../../../usr/local/Cellar/graphicsmagick/1.3.20/lib/libGraphicsMagick++.3.dylib"; sourceTree = "<group>"; };
+		0A173EE51A8130C30061AA87 /* libopencv_core.2.4.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_core.2.4.10.dylib; path = ../../../../usr/local/Cellar/opencv/2.4.10.1/lib/libopencv_core.2.4.10.dylib; sourceTree = "<group>"; };
+		0A173EE61A8130C30061AA87 /* libopencv_highgui.2.4.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_highgui.2.4.10.dylib; path = ../../../../usr/local/Cellar/opencv/2.4.10.1/lib/libopencv_highgui.2.4.10.dylib; sourceTree = "<group>"; };
+		0A173EE91A8130E00061AA87 /* libopencv_features2d.2.4.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_features2d.2.4.10.dylib; path = ../../../../usr/local/Cellar/opencv/2.4.10.1/lib/libopencv_features2d.2.4.10.dylib; sourceTree = "<group>"; };
+		0A173EEE1A81317C0061AA87 /* libopencv_imgproc.2.4.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_imgproc.2.4.10.dylib; path = ../../../../usr/local/Cellar/opencv/2.4.10.1/lib/libopencv_imgproc.2.4.10.dylib; sourceTree = "<group>"; };
+		0A173EF01A813C9E0061AA87 /* sort.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = sort.cpp; sourceTree = "<group>"; };
+		0A173EF11A813C9E0061AA87 /* sort.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = sort.h; sourceTree = "<group>"; };
 		0AF9A4E81A7A714F00F50FF5 /* Demuxer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Demuxer.cpp; path = video/Demuxer.cpp; sourceTree = "<group>"; };
 		0AF9A4E91A7A714F00F50FF5 /* Demuxer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Demuxer.hpp; path = video/Demuxer.hpp; sourceTree = "<group>"; };
 		0AF9A4EA1A7A714F00F50FF5 /* Log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Log.cpp; path = video/Log.cpp; sourceTree = "<group>"; };
@@ -260,7 +271,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A173EE71A8130C30061AA87 /* libopencv_core.2.4.10.dylib in Frameworks */,
 				0A173EDF1A7FA20D0061AA87 /* libGraphicsMagick.3.dylib in Frameworks */,
+				0A173EEA1A8130E00061AA87 /* libopencv_features2d.2.4.10.dylib in Frameworks */,
+				0A173EEF1A81317C0061AA87 /* libopencv_imgproc.2.4.10.dylib in Frameworks */,
+				0A173EE81A8130C30061AA87 /* libopencv_highgui.2.4.10.dylib in Frameworks */,
 				0A173EE01A7FA20D0061AA87 /* libGraphicsMagick++.3.dylib in Frameworks */,
 				0AF9A50B1A7A742700F50FF5 /* libavformat.a in Frameworks */,
 				0AF9A50D1A7A742700F50FF5 /* libswscale.a in Frameworks */,
@@ -301,6 +316,8 @@
 				0A0A40FD1A6C768B00AA18D6 /* main.cpp */,
 				0A0A40FF1A6C768B00AA18D6 /* Resources */,
 				0A0A40F81A6C768B00AA18D6 /* Supporting Files */,
+				0A173EF01A813C9E0061AA87 /* sort.cpp */,
+				0A173EF11A813C9E0061AA87 /* sort.h */,
 			);
 			path = pixelsort;
 			sourceTree = "<group>";
@@ -552,6 +569,10 @@
 		0A1D57AA1A7BE5D00079F7BB /* lib */ = {
 			isa = PBXGroup;
 			children = (
+				0A173EEE1A81317C0061AA87 /* libopencv_imgproc.2.4.10.dylib */,
+				0A173EE91A8130E00061AA87 /* libopencv_features2d.2.4.10.dylib */,
+				0A173EE51A8130C30061AA87 /* libopencv_core.2.4.10.dylib */,
+				0A173EE61A8130C30061AA87 /* libopencv_highgui.2.4.10.dylib */,
 				0AF9A5041A7A742700F50FF5 /* libavcodec.a */,
 				0AF9A5051A7A742700F50FF5 /* libavfilter.a */,
 				0AF9A5061A7A742700F50FF5 /* libavformat.a */,
@@ -691,6 +712,7 @@
 				0AF9A5011A7A714F00F50FF5 /* Timer.cpp in Sources */,
 				0A0A40FE1A6C768B00AA18D6 /* main.cpp in Sources */,
 				0AF9A5031A7A714F00F50FF5 /* VideoStream.cpp in Sources */,
+				0A173EF21A813C9E0061AA87 /* sort.cpp in Sources */,
 				0AF9A4FF1A7A714F00F50FF5 /* MovieImpl.cpp in Sources */,
 				0AF9A5001A7A714F00F50FF5 /* Stream.cpp in Sources */,
 				0A1355E11A7153B700D82DE4 /* platform_mac.cpp in Sources */,
@@ -814,6 +836,7 @@
 					"$(inherited)",
 					/usr/local/Cellar/ffmpeg/2.5.2/lib,
 					/usr/local/Cellar/graphicsmagick/1.3.20/lib,
+					/usr/local/Cellar/opencv/2.4.10.1/lib,
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = fakeartist;
@@ -840,6 +863,7 @@
 					"$(inherited)",
 					/usr/local/Cellar/ffmpeg/2.5.2/lib,
 					/usr/local/Cellar/graphicsmagick/1.3.20/lib,
+					/usr/local/Cellar/opencv/2.4.10.1/lib,
 				);
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = fakeartist;

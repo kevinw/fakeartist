@@ -11,11 +11,14 @@
 #include <sstream>
 #include <thread>
 
-
 #include "ResourcePath.hpp"
 #include "platform.h"
 
 #include <Magick++.h>
+
+#include "opencv2/imgproc/imgproc.hpp"
+#include "opencv2/highgui/highgui.hpp"
+
 
 using namespace sf;
 using namespace std;
@@ -587,7 +590,8 @@ struct Media
     enum MediaType
     {
         IMAGE,
-        MOVIE
+        MOVIE,
+        WEBCAM
     };
     
     MediaType type;
@@ -606,9 +610,6 @@ void writeThread(vector<Magick::Image> images, std::string path)
     cout << "...finished!" << endl;
 }
 
-
-
-
 int main(int, char const**)
 {
     RenderWindow window(VideoMode(800, 600), "fake artist");
@@ -623,27 +624,35 @@ int main(int, char const**)
     sfe::Movie movie;
 
     Texture texture;
-    Sprite movieSprite;
+    Sprite displaySprite;
 
     vector<string> movieFilenames = findMovies();
     
     vector<Media> medias;
+    Media webcamMedia = {Media::WEBCAM};
+    medias.push_back(webcamMedia);
+
     for (auto movieFilename : findMovies()) {
         Media media = {Media::MOVIE, movieFilename};
         medias.push_back(media);
     }
     
-    Uint32 mediaIndex = medias.size() - 1;
+    Int32 mediaIndex = 0;
+    Int32 oldMediaIndex;
 
     sf::Clock globalClock;
     State state;
     bool updateMedia = true;
+    bool firstUpdate = true;
 
     Image prettyImage;
     
     Magick::InitializeMagick(nullptr);
     vector<Image> animated;
     bool recording = false;
+
+    cv::VideoCapture webcam;
+    cv::Mat frameRGB, frameRGBA;
 
     while (window.isOpen()) {
         Event event;
@@ -652,8 +661,6 @@ int main(int, char const**)
             if (event.type == Event::Closed) {
                 window.close();
             }
-            
-            
             
             if (!recording && event.type == Event::KeyPressed && event.key.code == Keyboard::Space) {
                 cout << "Starting to record." << endl;
@@ -669,22 +676,6 @@ int main(int, char const**)
                         
                         Magick::Image magickImage(sfImage.getSize().x, sfImage.getSize().y, "RGBA", Magick::StorageType::CharPixel, pixels);
                         magickImage.animationDelay(1);
-
-                        //magickImage.modifyImage();
-                        //if (double r = movie.getVideoRotation()) {
-                        //    magickImage.rotate(r);
-                        //}
-                        //magickImage.syncPixels();
-                        
-                        /*
-                        Magick::Geometry geometry = magickImage.size();
-                        int w = geometry.width();
-                        int h = geometry.height();
-                        geometry.width(w/2);
-                        geometry.height(h/2);
-                        magickImage.scale(geometry);
-                         */
-                        
                         magickAnimated.push_back(magickImage);
                     }
                     thread saveThread(bind(writeThread, magickAnimated, path));
@@ -712,11 +703,14 @@ int main(int, char const**)
                         }
                         break;
                     case Keyboard::Down:
+                        oldMediaIndex = mediaIndex;
                         mediaIndex = (mediaIndex + 1) % medias.size();
                         updateMedia = true;
                         break;
                     case Keyboard::Up:
+                        oldMediaIndex = mediaIndex;
                         mediaIndex = (mediaIndex - 1) % medias.size();
+                        cout << oldMediaIndex << " TO " << mediaIndex << endl;
                         updateMedia = true;
                         break;
                     default:
@@ -727,19 +721,53 @@ int main(int, char const**)
             }
         }
         
+        Media& activeMedia = medias[mediaIndex];
+
         if (updateMedia) {
             updateMedia = false;
             
-            Media& activeMedia = medias[mediaIndex];
+            Media& oldMedia = medias[oldMediaIndex];
             
-            cout << activeMedia.filename << endl;
+            cout  << "new index " << mediaIndex << " " << oldMedia.type << " to " << activeMedia.type << endl;
+
+            if (!firstUpdate) {
+                if (oldMedia.type == Media::WEBCAM) {
+                    if (webcam.isOpened()) {
+                      webcam.release();
+                    }
+                }
+                if (oldMedia.type == Media::MOVIE) {
+                    movie.stop();
+                }
+            } else {
+                firstUpdate = false;
+            }
             
-            movie.openFromFile(activeMedia.filename);
-            texture.create(movie.getSize().x, movie.getSize().y);
-            movieSprite.setTexture(texture, true);
-            movieSprite.setOrigin(movie.getSize().x/2.0f, movie.getSize().y/2.0f);
-            movieSprite.setPosition(window.getSize().x/2.0f, window.getSize().y/2.0f);
-            movieSprite.setRotation(movie.getVideoRotation());
+            if (activeMedia.type == Media::MOVIE) {
+              cout << "Loading movie " << activeMedia.filename << endl;
+            
+              movie.openFromFile(activeMedia.filename);
+              texture.create(movie.getSize().x, movie.getSize().y);
+              displaySprite.setTexture(texture, true);
+              displaySprite.setOrigin(movie.getSize().x/2.0f, movie.getSize().y/2.0f);
+              displaySprite.setPosition(window.getSize().x/2.0f, window.getSize().y/2.0f);
+              displaySprite.setRotation(movie.getVideoRotation());
+            } else if (activeMedia.type == Media::WEBCAM) {
+                webcam.open(0);
+                
+                /* HACK */
+                const static int CV_CAP_PROP_FRAME_WIDTH    =3;
+                const static int CV_CAP_PROP_FRAME_HEIGHT   =4;
+
+                int width = webcam.get(CV_CAP_PROP_FRAME_WIDTH);
+                int height = webcam.get(CV_CAP_PROP_FRAME_HEIGHT);
+
+                texture.create(width, height);
+                displaySprite.setTexture(texture, true);
+                displaySprite.setOrigin(width/2.0f, height/2.0f);
+                displaySprite.setPosition(window.getSize().x/2.0f, window.getSize().y/2.0f);
+                displaySprite.setRotation(0);
+            }
 
         }
         
@@ -752,16 +780,26 @@ int main(int, char const**)
 
         state.time = globalClock.getElapsedTime().asSeconds();
 
-        movie.update();
+        if (activeMedia.type == Media::MOVIE) {
+          movie.update();
+          prettyImage = movie.getCurrentImage().copyToImage();
+        } else if (activeMedia.type == Media::WEBCAM) {
+            webcam >> frameRGB;
+            if (!frameRGB.empty()) {
+                cv::cvtColor(frameRGB, frameRGBA, cv::COLOR_BGR2RGBA);
+                prettyImage.create(frameRGBA.cols, frameRGBA.rows, frameRGBA.ptr());
+            }
+        }
         
-        prettyImage = movie.getCurrentImage().copyToImage();
         prettySort(prettyImage, state);
         texture.update(prettyImage);
         
         window.clear();
-        window.draw(movieSprite);
+        window.draw(displaySprite);
         window.display();
     }
+    
+//    edgeMain("/Users/kevin/Desktop/penguins.jpg");
 
     return EXIT_SUCCESS;
 }
