@@ -12,11 +12,40 @@
 #include <vector>
 #include <string>
 
+
+
 using std::string;
 using std::vector;
 
 vector<string> listDir(const string& dirName);
 vector<string> findMovies();
 string nextFilename();
+
+typedef void (*watchFileCallback)();
+
+#ifdef __APPLE__
+
+
+#include <CoreFoundation/CoreFoundation.h>
+#include <CoreServices/CoreServices.h>
+
+
+class OSXWatcher
+{
+public:
+    OSXWatcher(string strDirectory, watchFileCallback callback);
+    
+    bool start();
+    bool stop();
+    
+private:
+    static void fileSystemEventCallback(ConstFSEventStreamRef streamRef, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags eventFlags[], const FSEventStreamEventId eventIds[]);
+    
+    FSEventStreamRef stream;
+    string dirToWatch;
+    watchFileCallback callback;
+};
+
+#endif
 
 #endif
