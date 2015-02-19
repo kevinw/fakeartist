@@ -25,6 +25,8 @@
 #include "prettysort.h"
 
 
+const static bool showPlanets = false;
+
 using namespace sf;
 using namespace std;
 
@@ -36,10 +38,6 @@ Magick::Image sfmlToMagick(sf::Image& sfImage)
     image.modifyImage();
     
 }
-
-static void* prettySortLib = nullptr;
-typedef void (*prettySortFuncType)(Image& image, const State& state);
-prettySortFuncType prettySortFunc = nullptr;
 
 namespace sfe {
     void dumpAvailableDemuxers();
@@ -71,6 +69,14 @@ void writeThread(vector<Magick::Image> images, std::string path)
     cout << "...finished!" << endl;
 }
 
+float vectorLength(const Vector2f& vec) {
+    return sqrt(vec.x * vec.x + vec.y * vec.y);
+}
+
+Vector2f vectorNormalized(const Vector2f& v) {
+  return v / vectorLength(v);
+}
+
 static void updateStateFromKeyboard(State& state, Keyboard::Key keyCode)
 {
     switch (keyCode) {
@@ -97,23 +103,8 @@ static void updateStateFromKeyboard(State& state, Keyboard::Key keyCode)
     }
 }
 
-static const char* prettySortLibName = "libprettysort.dylib";
-
-void reload()
-{
-    if (prettySortLib) {
-        dlclose(prettySortLib);
-    }
-    
-    prettySortLib = dlopen(prettySortLibName, RTLD_LOCAL|RTLD_LAZY);
-    if (!prettySortLib) {
-        cerr << "could not load libprettysort.dylib" << endl;
-    } else {
-        prettySortFunc = reinterpret_cast<prettySortFuncType>(dlsym(prettySortLib, "prettySort"));
-        if (!prettySortFunc) {
-            cerr << "could not find prettySort function" << endl;
-        }
-    }
+static float randomFloat() {
+    return ((float)rand()) / (float)RAND_MAX;
 }
 
 int main(int, char const**)
@@ -160,12 +151,8 @@ int main(int, char const**)
     cv::VideoCapture webcam;
     cv::Mat frameRGB, frameRGBA;
     
-    OSXWatcher watcher(prettySortLibName, reload);
-    watcher.start();
+    sf::Sprite sprite;
     
-    reload();
-
-
     while (window.isOpen()) {
         Event event;
         
@@ -224,9 +211,6 @@ int main(int, char const**)
                         cout << oldMediaIndex << " TO " << mediaIndex << endl;
                         updateMedia = true;
                         break;
-                    case Keyboard::R:
-                        reload();
-                        break;
                     default:
                         break;
                 }
@@ -239,7 +223,6 @@ int main(int, char const**)
 
         if (updateMedia) {
             updateMedia = false;
-            
 
             if (!firstUpdate) {
                 Media& oldMedia = medias[oldMediaIndex];
@@ -280,7 +263,6 @@ int main(int, char const**)
                 displaySprite.setPosition(window.getSize().x/2.0f, window.getSize().y/2.0f);
                 displaySprite.setRotation(0);
             }
-
         }
         
         state.mouseX = clamp(static_cast<float>(Mouse::getPosition(window).x) / window.getSize().x);
@@ -302,13 +284,14 @@ int main(int, char const**)
             }
         }
         
-        if (prettySortFunc)
-            prettySortFunc(prettyImage, state);
+        prettySort(prettyImage, state);
         
         texture.update(prettyImage);
         
         window.clear();
         window.draw(displaySprite);
+        
+
         window.display();
     }
     

@@ -105,7 +105,7 @@ VectorPixels getRandomWalk(const FloatRect& rect)
     int N = randomFloat() * 500;
     
     for (int i = 0; i < N; ++i) {
-        int length = randomFloat() * 30;
+        int length = randomFloat() * 70;
         while(length-- > 0) {
             Vector2i nearestInt(round(p.x), round(p.y));
             if (rect.contains(nearestInt.x, nearestInt.y)) {
@@ -455,11 +455,8 @@ void sortRow(Image& image, int row, Uint8 blackValue)
 
 
 
-void prettySort(Image* image_, State* state_)
+void prettySort(Image& image, State& state)
 {
-    Image& image = *image_;
-    State& state = *state_;
-    
     state.circles = !state.circles;
     state.circles = !state.circles;
     

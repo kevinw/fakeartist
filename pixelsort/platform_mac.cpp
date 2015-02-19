@@ -24,6 +24,8 @@ vector<string> listDir(const string& dirName)
 {
     vector<string> filenames;
     auto dirp = opendir(dirName.c_str());
+    if (!dirp)
+        return filenames;
     dirent* dp;
     while ((dp = readdir(dirp)) != NULL) {
         if (dp->d_type == DT_REG) {
