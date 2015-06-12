@@ -80,6 +80,8 @@ bool OSXWatcher::start()
     
     // Read the folder content to protect any unprotected or pending file
 //    ReadFolderContent();
+    
+    return true;
 }
 
 bool OSXWatcher::stop()
@@ -87,6 +89,7 @@ bool OSXWatcher::stop()
     FSEventStreamStop(stream);
     FSEventStreamInvalidate(stream);
     FSEventStreamRelease(stream);
+    return true;
 }
 
 void OSXWatcher::fileSystemEventCallback(ConstFSEventStreamRef /*streamRef*/, void *clientCallBackInfo, size_t numEvents, void *eventPaths, const FSEventStreamEventFlags eventFlags[], const FSEventStreamEventId eventIds[])
@@ -94,18 +97,18 @@ void OSXWatcher::fileSystemEventCallback(ConstFSEventStreamRef /*streamRef*/, vo
     reinterpret_cast<OSXWatcher*>(clientCallBackInfo)->callback();
     cout << "filesystem callback" << endl;
     
-    char **paths = (char **)eventPaths;
+    //char **paths = (char **)eventPaths;
     
     for (size_t i=0; i<numEvents; i++) {
         // When a file is created we receive first a kFSEventStreamEventFlagItemCreated and second a (kFSEventStreamEventFlagItemCreated & kFSEventStreamEventFlagItemModified)
         // when the file is finally copied. Catch this second event.
         
-        FSEventStreamEventFlags flags = eventFlags[i];
+        //FSEventStreamEventFlags flags = eventFlags[i];
         
 //        if (flags & kFSEventStreamEventFlagItemModified) {
             std::cout << "updated!" << std::endl;
             
-            OSXWatcher *watcher = (OSXWatcher *)clientCallBackInfo;
+            //OSXWatcher *watcher = (OSXWatcher *)clientCallBackInfo;
 //            if (watcher->FileValidator(paths[i]))
 //                emit watcher->yourSignalHere();
 //        }

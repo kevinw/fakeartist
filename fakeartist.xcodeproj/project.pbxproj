@@ -12,15 +12,30 @@
 		0A0A41051A6C768B00AA18D6 /* sansation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0A0A41041A6C768B00AA18D6 /* sansation.ttf */; };
 		0A0A41071A6C768B00AA18D6 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A0A41061A6C768B00AA18D6 /* icon.png */; };
 		0A1355E11A7153B700D82DE4 /* platform_mac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A1355DF1A7153B700D82DE4 /* platform_mac.cpp */; };
-		0A173EDF1A7FA20D0061AA87 /* libGraphicsMagick.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A173EDD1A7FA20D0061AA87 /* libGraphicsMagick.3.dylib */; };
-		0A173EE01A7FA20D0061AA87 /* libGraphicsMagick++.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A173EDE1A7FA20D0061AA87 /* libGraphicsMagick++.3.dylib */; };
-		0A173EE71A8130C30061AA87 /* libopencv_core.2.4.10.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A173EE51A8130C30061AA87 /* libopencv_core.2.4.10.dylib */; };
-		0A173EE81A8130C30061AA87 /* libopencv_highgui.2.4.10.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A173EE61A8130C30061AA87 /* libopencv_highgui.2.4.10.dylib */; };
-		0A173EEA1A8130E00061AA87 /* libopencv_features2d.2.4.10.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A173EE91A8130E00061AA87 /* libopencv_features2d.2.4.10.dylib */; };
-		0A173EEF1A81317C0061AA87 /* libopencv_imgproc.2.4.10.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A173EEE1A81317C0061AA87 /* libopencv_imgproc.2.4.10.dylib */; };
+		0A2605E91B2AC48E004082B7 /* libavcodec.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A2605E11B2AC48E004082B7 /* libavcodec.dylib */; };
+		0A2605EA1B2AC48E004082B7 /* libavdevice.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A2605E21B2AC48E004082B7 /* libavdevice.dylib */; };
+		0A2605EB1B2AC48E004082B7 /* libavfilter.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A2605E31B2AC48E004082B7 /* libavfilter.dylib */; };
+		0A2605EC1B2AC48E004082B7 /* libavformat.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A2605E41B2AC48E004082B7 /* libavformat.dylib */; };
+		0A2605ED1B2AC48E004082B7 /* libavresample.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A2605E51B2AC48E004082B7 /* libavresample.dylib */; };
+		0A2605EE1B2AC48E004082B7 /* libavutil.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A2605E61B2AC48E004082B7 /* libavutil.dylib */; };
+		0A2605EF1B2AC48E004082B7 /* libswresample.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A2605E71B2AC48E004082B7 /* libswresample.dylib */; };
+		0A2605F01B2AC48E004082B7 /* libswscale.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A2605E81B2AC48E004082B7 /* libswscale.dylib */; };
 		0A35CE851A82684200C4806D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A35CE841A82684200C4806D /* CoreFoundation.framework */; };
 		0A35CE871A82684700C4806D /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A35CE861A82684700C4806D /* CoreServices.framework */; };
 		0A4A432E1A9610C800BB00A5 /* prettysort.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0A35CE7F1A82565700C4806D /* prettysort.cpp */; };
+		0A4EA45C1B2AC39000BADD56 /* libopencv_contrib.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A4EA4561B2AC39000BADD56 /* libopencv_contrib.dylib */; };
+		0A4EA45D1B2AC39000BADD56 /* libopencv_core.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A4EA4571B2AC39000BADD56 /* libopencv_core.dylib */; };
+		0A4EA45E1B2AC39000BADD56 /* libopencv_gpu.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A4EA4581B2AC39000BADD56 /* libopencv_gpu.dylib */; };
+		0A4EA45F1B2AC39000BADD56 /* libopencv_highgui.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A4EA4591B2AC39000BADD56 /* libopencv_highgui.dylib */; };
+		0A4EA4601B2AC39000BADD56 /* libopencv_imgproc.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A4EA45A1B2AC39000BADD56 /* libopencv_imgproc.dylib */; };
+		0A4EA4611B2AC39000BADD56 /* libopencv_video.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A4EA45B1B2AC39000BADD56 /* libopencv_video.dylib */; };
+		0A4EA4621B2AC3B000BADD56 /* libsfml-audio.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AED77381B2AC14B002D48AC /* libsfml-audio.dylib */; };
+		0A4EA4631B2AC3B000BADD56 /* libsfml-graphics.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AED77391B2AC14B002D48AC /* libsfml-graphics.dylib */; };
+		0A4EA4641B2AC3B000BADD56 /* libsfml-network.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AED773A1B2AC14B002D48AC /* libsfml-network.dylib */; };
+		0A4EA4651B2AC3B000BADD56 /* libsfml-system.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AED773B1B2AC14B002D48AC /* libsfml-system.dylib */; };
+		0A4EA4661B2AC3B000BADD56 /* libsfml-window.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AED773C1B2AC14B002D48AC /* libsfml-window.dylib */; };
+		0A4EA46A1B2AC3DE00BADD56 /* libGraphicsMagick.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A4EA4681B2AC3DE00BADD56 /* libGraphicsMagick.dylib */; };
+		0A4EA46B1B2AC3DE00BADD56 /* libGraphicsMagick++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A4EA4691B2AC3DE00BADD56 /* libGraphicsMagick++.dylib */; };
 		0AF9A4FB1A7A714F00F50FF5 /* Demuxer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9A4E81A7A714F00F50FF5 /* Demuxer.cpp */; };
 		0AF9A4FC1A7A714F00F50FF5 /* Log.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9A4EA1A7A714F00F50FF5 /* Log.cpp */; };
 		0AF9A4FD1A7A714F00F50FF5 /* Macros.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9A4EC1A7A714F00F50FF5 /* Macros.cpp */; };
@@ -30,11 +45,6 @@
 		0AF9A5011A7A714F00F50FF5 /* Timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9A4F41A7A714F00F50FF5 /* Timer.cpp */; };
 		0AF9A5021A7A714F00F50FF5 /* Utilities.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9A4F61A7A714F00F50FF5 /* Utilities.cpp */; };
 		0AF9A5031A7A714F00F50FF5 /* VideoStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9A4F81A7A714F00F50FF5 /* VideoStream.cpp */; };
-		0AF9A5091A7A742700F50FF5 /* libavcodec.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF9A5041A7A742700F50FF5 /* libavcodec.a */; };
-		0AF9A50A1A7A742700F50FF5 /* libavfilter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF9A5051A7A742700F50FF5 /* libavfilter.a */; };
-		0AF9A50B1A7A742700F50FF5 /* libavformat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF9A5061A7A742700F50FF5 /* libavformat.a */; };
-		0AF9A50C1A7A742700F50FF5 /* libavutil.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF9A5071A7A742700F50FF5 /* libavutil.a */; };
-		0AF9A50D1A7A742700F50FF5 /* libswscale.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0AF9A5081A7A742700F50FF5 /* libswscale.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -234,16 +244,31 @@
 		0A173ED91A7FA1E40061AA87 /* yuv.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = yuv.so; sourceTree = "<group>"; };
 		0A173EDB1A7FA1E40061AA87 /* analyze.la */ = {isa = PBXFileReference; lastKnownFileType = text; path = analyze.la; sourceTree = "<group>"; };
 		0A173EDC1A7FA1E40061AA87 /* analyze.so */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.bundle"; path = analyze.so; sourceTree = "<group>"; };
-		0A173EDD1A7FA20D0061AA87 /* libGraphicsMagick.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGraphicsMagick.3.dylib; path = ../../../../usr/local/Cellar/graphicsmagick/1.3.20/lib/libGraphicsMagick.3.dylib; sourceTree = "<group>"; };
-		0A173EDE1A7FA20D0061AA87 /* libGraphicsMagick++.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libGraphicsMagick++.3.dylib"; path = "../../../../usr/local/Cellar/graphicsmagick/1.3.20/lib/libGraphicsMagick++.3.dylib"; sourceTree = "<group>"; };
-		0A173EE51A8130C30061AA87 /* libopencv_core.2.4.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_core.2.4.10.dylib; path = ../../../../usr/local/Cellar/opencv/2.4.10.1/lib/libopencv_core.2.4.10.dylib; sourceTree = "<group>"; };
-		0A173EE61A8130C30061AA87 /* libopencv_highgui.2.4.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_highgui.2.4.10.dylib; path = ../../../../usr/local/Cellar/opencv/2.4.10.1/lib/libopencv_highgui.2.4.10.dylib; sourceTree = "<group>"; };
-		0A173EE91A8130E00061AA87 /* libopencv_features2d.2.4.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_features2d.2.4.10.dylib; path = ../../../../usr/local/Cellar/opencv/2.4.10.1/lib/libopencv_features2d.2.4.10.dylib; sourceTree = "<group>"; };
-		0A173EEE1A81317C0061AA87 /* libopencv_imgproc.2.4.10.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_imgproc.2.4.10.dylib; path = ../../../../usr/local/Cellar/opencv/2.4.10.1/lib/libopencv_imgproc.2.4.10.dylib; sourceTree = "<group>"; };
+		0A2605E11B2AC48E004082B7 /* libavcodec.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavcodec.dylib; path = /usr/local/lib/libavcodec.dylib; sourceTree = "<absolute>"; };
+		0A2605E21B2AC48E004082B7 /* libavdevice.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavdevice.dylib; path = /usr/local/lib/libavdevice.dylib; sourceTree = "<absolute>"; };
+		0A2605E31B2AC48E004082B7 /* libavfilter.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavfilter.dylib; path = /usr/local/lib/libavfilter.dylib; sourceTree = "<absolute>"; };
+		0A2605E41B2AC48E004082B7 /* libavformat.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavformat.dylib; path = /usr/local/lib/libavformat.dylib; sourceTree = "<absolute>"; };
+		0A2605E51B2AC48E004082B7 /* libavresample.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavresample.dylib; path = /usr/local/lib/libavresample.dylib; sourceTree = "<absolute>"; };
+		0A2605E61B2AC48E004082B7 /* libavutil.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libavutil.dylib; path = /usr/local/lib/libavutil.dylib; sourceTree = "<absolute>"; };
+		0A2605E71B2AC48E004082B7 /* libswresample.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libswresample.dylib; path = /usr/local/lib/libswresample.dylib; sourceTree = "<absolute>"; };
+		0A2605E81B2AC48E004082B7 /* libswscale.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libswscale.dylib; path = /usr/local/lib/libswscale.dylib; sourceTree = "<absolute>"; };
 		0A35CE7B1A82565700C4806D /* prettysort.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = prettysort.h; sourceTree = "<group>"; };
 		0A35CE7F1A82565700C4806D /* prettysort.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = prettysort.cpp; sourceTree = "<group>"; };
 		0A35CE841A82684200C4806D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		0A35CE861A82684700C4806D /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = System/Library/Frameworks/CoreServices.framework; sourceTree = SDKROOT; };
+		0A4EA4561B2AC39000BADD56 /* libopencv_contrib.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_contrib.dylib; path = /usr/local/lib/libopencv_contrib.dylib; sourceTree = "<absolute>"; };
+		0A4EA4571B2AC39000BADD56 /* libopencv_core.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_core.dylib; path = /usr/local/lib/libopencv_core.dylib; sourceTree = "<absolute>"; };
+		0A4EA4581B2AC39000BADD56 /* libopencv_gpu.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_gpu.dylib; path = /usr/local/lib/libopencv_gpu.dylib; sourceTree = "<absolute>"; };
+		0A4EA4591B2AC39000BADD56 /* libopencv_highgui.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_highgui.dylib; path = /usr/local/lib/libopencv_highgui.dylib; sourceTree = "<absolute>"; };
+		0A4EA45A1B2AC39000BADD56 /* libopencv_imgproc.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_imgproc.dylib; path = /usr/local/lib/libopencv_imgproc.dylib; sourceTree = "<absolute>"; };
+		0A4EA45B1B2AC39000BADD56 /* libopencv_video.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libopencv_video.dylib; path = /usr/local/lib/libopencv_video.dylib; sourceTree = "<absolute>"; };
+		0A4EA4681B2AC3DE00BADD56 /* libGraphicsMagick.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libGraphicsMagick.dylib; path = /usr/local/lib/libGraphicsMagick.dylib; sourceTree = "<absolute>"; };
+		0A4EA4691B2AC3DE00BADD56 /* libGraphicsMagick++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libGraphicsMagick++.dylib"; path = "/usr/local/lib/libGraphicsMagick++.dylib"; sourceTree = "<absolute>"; };
+		0AED77381B2AC14B002D48AC /* libsfml-audio.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libsfml-audio.dylib"; path = "/usr/local/lib/libsfml-audio.dylib"; sourceTree = "<absolute>"; };
+		0AED77391B2AC14B002D48AC /* libsfml-graphics.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libsfml-graphics.dylib"; path = "/usr/local/lib/libsfml-graphics.dylib"; sourceTree = "<absolute>"; };
+		0AED773A1B2AC14B002D48AC /* libsfml-network.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libsfml-network.dylib"; path = "/usr/local/lib/libsfml-network.dylib"; sourceTree = "<absolute>"; };
+		0AED773B1B2AC14B002D48AC /* libsfml-system.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libsfml-system.dylib"; path = "/usr/local/lib/libsfml-system.dylib"; sourceTree = "<absolute>"; };
+		0AED773C1B2AC14B002D48AC /* libsfml-window.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libsfml-window.dylib"; path = "/usr/local/lib/libsfml-window.dylib"; sourceTree = "<absolute>"; };
 		0AF9A4E81A7A714F00F50FF5 /* Demuxer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Demuxer.cpp; path = video/Demuxer.cpp; sourceTree = "<group>"; };
 		0AF9A4E91A7A714F00F50FF5 /* Demuxer.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Demuxer.hpp; path = video/Demuxer.hpp; sourceTree = "<group>"; };
 		0AF9A4EA1A7A714F00F50FF5 /* Log.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Log.cpp; path = video/Log.cpp; sourceTree = "<group>"; };
@@ -263,11 +288,6 @@
 		0AF9A4F81A7A714F00F50FF5 /* VideoStream.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VideoStream.cpp; path = video/VideoStream.cpp; sourceTree = "<group>"; };
 		0AF9A4F91A7A714F00F50FF5 /* VideoStream.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = VideoStream.hpp; path = video/VideoStream.hpp; sourceTree = "<group>"; };
 		0AF9A4FA1A7A714F00F50FF5 /* Visibility.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = Visibility.hpp; path = video/Visibility.hpp; sourceTree = "<group>"; };
-		0AF9A5041A7A742700F50FF5 /* libavcodec.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavcodec.a; path = /usr/local/Cellar/ffmpeg/2.5.2/lib/libavcodec.a; sourceTree = "<absolute>"; };
-		0AF9A5051A7A742700F50FF5 /* libavfilter.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavfilter.a; path = /usr/local/Cellar/ffmpeg/2.5.2/lib/libavfilter.a; sourceTree = "<absolute>"; };
-		0AF9A5061A7A742700F50FF5 /* libavformat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavformat.a; path = /usr/local/Cellar/ffmpeg/2.5.2/lib/libavformat.a; sourceTree = "<absolute>"; };
-		0AF9A5071A7A742700F50FF5 /* libavutil.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libavutil.a; path = /usr/local/Cellar/ffmpeg/2.5.2/lib/libavutil.a; sourceTree = "<absolute>"; };
-		0AF9A5081A7A742700F50FF5 /* libswscale.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libswscale.a; path = /usr/local/Cellar/ffmpeg/2.5.2/lib/libswscale.a; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -275,19 +295,29 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A4EA45D1B2AC39000BADD56 /* libopencv_core.dylib in Frameworks */,
+				0A4EA4651B2AC3B000BADD56 /* libsfml-system.dylib in Frameworks */,
+				0A4EA4601B2AC39000BADD56 /* libopencv_imgproc.dylib in Frameworks */,
+				0A4EA4621B2AC3B000BADD56 /* libsfml-audio.dylib in Frameworks */,
+				0A2605ED1B2AC48E004082B7 /* libavresample.dylib in Frameworks */,
+				0A2605EA1B2AC48E004082B7 /* libavdevice.dylib in Frameworks */,
 				0A35CE871A82684700C4806D /* CoreServices.framework in Frameworks */,
 				0A35CE851A82684200C4806D /* CoreFoundation.framework in Frameworks */,
-				0A173EE71A8130C30061AA87 /* libopencv_core.2.4.10.dylib in Frameworks */,
-				0A173EDF1A7FA20D0061AA87 /* libGraphicsMagick.3.dylib in Frameworks */,
-				0A173EEA1A8130E00061AA87 /* libopencv_features2d.2.4.10.dylib in Frameworks */,
-				0A173EEF1A81317C0061AA87 /* libopencv_imgproc.2.4.10.dylib in Frameworks */,
-				0A173EE81A8130C30061AA87 /* libopencv_highgui.2.4.10.dylib in Frameworks */,
-				0A173EE01A7FA20D0061AA87 /* libGraphicsMagick++.3.dylib in Frameworks */,
-				0AF9A50B1A7A742700F50FF5 /* libavformat.a in Frameworks */,
-				0AF9A50D1A7A742700F50FF5 /* libswscale.a in Frameworks */,
-				0AF9A50A1A7A742700F50FF5 /* libavfilter.a in Frameworks */,
-				0AF9A50C1A7A742700F50FF5 /* libavutil.a in Frameworks */,
-				0AF9A5091A7A742700F50FF5 /* libavcodec.a in Frameworks */,
+				0A4EA45E1B2AC39000BADD56 /* libopencv_gpu.dylib in Frameworks */,
+				0A4EA45C1B2AC39000BADD56 /* libopencv_contrib.dylib in Frameworks */,
+				0A4EA46B1B2AC3DE00BADD56 /* libGraphicsMagick++.dylib in Frameworks */,
+				0A4EA45F1B2AC39000BADD56 /* libopencv_highgui.dylib in Frameworks */,
+				0A2605EB1B2AC48E004082B7 /* libavfilter.dylib in Frameworks */,
+				0A4EA4661B2AC3B000BADD56 /* libsfml-window.dylib in Frameworks */,
+				0A2605EC1B2AC48E004082B7 /* libavformat.dylib in Frameworks */,
+				0A4EA4611B2AC39000BADD56 /* libopencv_video.dylib in Frameworks */,
+				0A2605EE1B2AC48E004082B7 /* libavutil.dylib in Frameworks */,
+				0A4EA4631B2AC3B000BADD56 /* libsfml-graphics.dylib in Frameworks */,
+				0A4EA4641B2AC3B000BADD56 /* libsfml-network.dylib in Frameworks */,
+				0A2605F01B2AC48E004082B7 /* libswscale.dylib in Frameworks */,
+				0A2605E91B2AC48E004082B7 /* libavcodec.dylib in Frameworks */,
+				0A4EA46A1B2AC3DE00BADD56 /* libGraphicsMagick.dylib in Frameworks */,
+				0A2605EF1B2AC48E004082B7 /* libswresample.dylib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,8 +329,6 @@
 			children = (
 				0A35CE861A82684700C4806D /* CoreServices.framework */,
 				0A35CE841A82684200C4806D /* CoreFoundation.framework */,
-				0A173EDD1A7FA20D0061AA87 /* libGraphicsMagick.3.dylib */,
-				0A173EDE1A7FA20D0061AA87 /* libGraphicsMagick++.3.dylib */,
 				0A173E1D1A7FA1E30061AA87 /* GraphicsMagick */,
 				0A1D57AA1A7BE5D00079F7BB /* lib */,
 				0A0A40F71A6C768B00AA18D6 /* pixelsort */,
@@ -576,15 +604,10 @@
 		0A1D57AA1A7BE5D00079F7BB /* lib */ = {
 			isa = PBXGroup;
 			children = (
-				0A173EEE1A81317C0061AA87 /* libopencv_imgproc.2.4.10.dylib */,
-				0A173EE91A8130E00061AA87 /* libopencv_features2d.2.4.10.dylib */,
-				0A173EE51A8130C30061AA87 /* libopencv_core.2.4.10.dylib */,
-				0A173EE61A8130C30061AA87 /* libopencv_highgui.2.4.10.dylib */,
-				0AF9A5041A7A742700F50FF5 /* libavcodec.a */,
-				0AF9A5051A7A742700F50FF5 /* libavfilter.a */,
-				0AF9A5061A7A742700F50FF5 /* libavformat.a */,
-				0AF9A5071A7A742700F50FF5 /* libavutil.a */,
-				0AF9A5081A7A742700F50FF5 /* libswscale.a */,
+				0A2605E01B2AC473004082B7 /* libav */,
+				0A4EA4671B2AC3C400BADD56 /* graphicsmagick */,
+				0A4EA4551B2AC35D00BADD56 /* opencv */,
+				0AED77371B2AC140002D48AC /* sfml */,
 			);
 			name = lib;
 			sourceTree = "<group>";
@@ -600,6 +623,21 @@
 			name = mac;
 			sourceTree = "<group>";
 		};
+		0A2605E01B2AC473004082B7 /* libav */ = {
+			isa = PBXGroup;
+			children = (
+				0A2605E11B2AC48E004082B7 /* libavcodec.dylib */,
+				0A2605E21B2AC48E004082B7 /* libavdevice.dylib */,
+				0A2605E31B2AC48E004082B7 /* libavfilter.dylib */,
+				0A2605E41B2AC48E004082B7 /* libavformat.dylib */,
+				0A2605E51B2AC48E004082B7 /* libavresample.dylib */,
+				0A2605E61B2AC48E004082B7 /* libavutil.dylib */,
+				0A2605E71B2AC48E004082B7 /* libswresample.dylib */,
+				0A2605E81B2AC48E004082B7 /* libswscale.dylib */,
+			);
+			name = libav;
+			sourceTree = "<group>";
+		};
 		0A35CE7A1A82565700C4806D /* prettysort */ = {
 			isa = PBXGroup;
 			children = (
@@ -607,6 +645,40 @@
 				0A35CE7F1A82565700C4806D /* prettysort.cpp */,
 			);
 			path = prettysort;
+			sourceTree = "<group>";
+		};
+		0A4EA4551B2AC35D00BADD56 /* opencv */ = {
+			isa = PBXGroup;
+			children = (
+				0A4EA4561B2AC39000BADD56 /* libopencv_contrib.dylib */,
+				0A4EA4571B2AC39000BADD56 /* libopencv_core.dylib */,
+				0A4EA4581B2AC39000BADD56 /* libopencv_gpu.dylib */,
+				0A4EA4591B2AC39000BADD56 /* libopencv_highgui.dylib */,
+				0A4EA45A1B2AC39000BADD56 /* libopencv_imgproc.dylib */,
+				0A4EA45B1B2AC39000BADD56 /* libopencv_video.dylib */,
+			);
+			name = opencv;
+			sourceTree = "<group>";
+		};
+		0A4EA4671B2AC3C400BADD56 /* graphicsmagick */ = {
+			isa = PBXGroup;
+			children = (
+				0A4EA4681B2AC3DE00BADD56 /* libGraphicsMagick.dylib */,
+				0A4EA4691B2AC3DE00BADD56 /* libGraphicsMagick++.dylib */,
+			);
+			name = graphicsmagick;
+			sourceTree = "<group>";
+		};
+		0AED77371B2AC140002D48AC /* sfml */ = {
+			isa = PBXGroup;
+			children = (
+				0AED77381B2AC14B002D48AC /* libsfml-audio.dylib */,
+				0AED77391B2AC14B002D48AC /* libsfml-graphics.dylib */,
+				0AED773A1B2AC14B002D48AC /* libsfml-network.dylib */,
+				0AED773B1B2AC14B002D48AC /* libsfml-system.dylib */,
+				0AED773C1B2AC14B002D48AC /* libsfml-window.dylib */,
+			);
+			name = sfml;
 			sourceTree = "<group>";
 		};
 		0AF9A4C21A7A70B700F50FF5 /* video */ = {
@@ -645,7 +717,6 @@
 				0A0A40F01A6C768B00AA18D6 /* Sources */,
 				0A0A40F11A6C768B00AA18D6 /* Frameworks */,
 				0A0A40F21A6C768B00AA18D6 /* Resources */,
-				0A0A40F31A6C768B00AA18D6 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -662,7 +733,7 @@
 		0A0A40EC1A6C768B00AA18D6 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 0630;
 				ORGANIZATIONNAME = tinygayvoxels;
 				TargetAttributes = {
 					0A0A40F41A6C768B00AA18D6 = {
@@ -699,22 +770,6 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
-/* Begin PBXShellScriptBuildPhase section */
-		0A0A40F31A6C768B00AA18D6 /* ShellScript */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "# This shell script simply copies required SFML dylibs/frameworks into the application bundle frameworks folder.\n# If you're using static libraries (which is not recommended) you should remove this script from your project.\n\n# Are we building a project that uses frameworks or dylibs?\ncase \"$SFML_BINARY_TYPE\" in\n    DYLIBS)\n        frameworks=\"false\"\n        ;;\n    *)\n        frameworks=\"true\"\n        ;;\nesac\n\n# Echoes to stderr\nerror () # $* message to display\n{\n    echo $* 1>&2\n    exit 2\n}\n\nassert () # $1 is a boolean, $2...N is an error message\n{\n    if [ $# -lt 2 ]\n    then\n        error \"Internal error in assert : not enough args\"\n    fi\n\n    if [ $1 -ne 0 ]\n    then\n        shift\n        error \"$*\"\n    fi\n}\n\nforce_remove () # $@ is some paths\n{\n    test $# -ge 1\n    assert $? \"force_remove() requires at least one parameter\"\n    rm -fr $@\n    assert $? \"couldn't remove $@\"\n}\n\ncopy () # $1 is a source, $2 is a destination\n{\n    test $# -eq 2\n    assert $? \"copy() requires two parameters\"\n    ditto \"$1\" \"$2\"\n    assert $? \"couldn't copy $1 to $2\"\n}\n\nrequire () # $1 is a SFML module like 'system' or 'audio'\n{\n    dest=\"$BUILT_PRODUCTS_DIR/$PRODUCT_NAME.app/Contents/Frameworks\"\n\n    if [ -z \"$1\" ]\n    then\n        error \"require() requires one parameter!\"\n    else\n        # clean potentially old stuff\n        force_remove \"$dest/libsfml-$1\"*\n        force_remove \"$dest/sfml-$1.framework\"\n\n        # copy SFML libraries\n        if [ \"$frameworks\" = \"true\" ]\n        then\n            source=\"/Library/Frameworks/sfml-$1.framework\"\n            target=\"sfml-$1.framework\"\n        elif [ \"$SFML_LINK_DYLIBS_SUFFIX\" = \"-d\" ]\n        then\n            source=\"/usr/local/lib/libsfml-$1-d.dylib\"\n            target=\"`readlink $source`\"\n        else\n            source=\"/usr/local/lib/libsfml-$1.dylib\"\n            target=\"`readlink $source`\"\n        fi\n\n        copy \"$source\" \"$dest/$target\"\n\n        # copy extra dependencies\n        if [ \"$1\" = \"audio\" ]\n        then\n            # copy sndfile framework too\n            copy \"/Library/Frameworks/sndfile.framework\" \"$dest/sndfile.framework\"\n        elif [ \"$1\" = \"graphics\" ]\n        then\n            # copy freetype framework too\n            copy \"/Library/Frameworks/freetype.framework\" \"$dest/freetype.framework\"\n        fi\n    fi\n}\n\nif [ -n \"$SFML_SYSTEM\" ]\nthen\n    require \"system\"\nfi\n\nif [ -n \"$SFML_AUDIO\" ]\nthen\n    require \"audio\"\nfi\n\nif [ -n \"$SFML_NETWORK\" ]\nthen\n    require \"network\"\nfi\n\nif [ -n \"$SFML_WINDOW\" ]\nthen\n    require \"window\"\nfi\n\nif [ -n \"$SFML_GRAPHICS\" ]\nthen\n    require \"graphics\"\nfi";
-		};
-/* End PBXShellScriptBuildPhase section */
-
 /* Begin PBXSourcesBuildPhase section */
 		0A0A40F01A6C768B00AA18D6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -742,17 +797,28 @@
 		0A0A41081A6C768B00AA18D6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					i386,
-					x86_64,
-				);
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					/Library/Frameworks/,
 					"$(inherited)",
 				);
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include/,
 					"$(inherited)",
@@ -762,26 +828,8 @@
 					"$(inherited)",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"$(SFML_SYSTEM)",
-					"$(SFML_WINDOW)",
-					"$(SFML_GRAPHICS)",
-					"$(SFML_AUDIO)",
-					"$(SFML_NETWORK)",
-				);
-				SFML_AUDIO = "$(SFML_LINK_PREFIX) sfml-audio$(SFML_LINK_SUFFIX)";
-				SFML_BINARY_TYPE = FRAMEWORKS;
-				SFML_GRAPHICS = "$(SFML_LINK_PREFIX) sfml-graphics$(SFML_LINK_SUFFIX)";
-				SFML_LINK_DYLIBS_PREFIX = "-l";
-				SFML_LINK_DYLIBS_SUFFIX = "";
-				SFML_LINK_FRAMEWORKS_PREFIX = "-framework";
-				SFML_LINK_FRAMEWORKS_SUFFIX = "";
-				SFML_LINK_PREFIX = "$(SFML_LINK_$(SFML_BINARY_TYPE)_PREFIX)";
-				SFML_LINK_SUFFIX = "$(SFML_LINK_$(SFML_BINARY_TYPE)_SUFFIX)";
-				SFML_NETWORK = "$(SFML_LINK_PREFIX) sfml-network$(SFML_LINK_SUFFIX)";
-				SFML_SYSTEM = "$(SFML_LINK_PREFIX) sfml-system$(SFML_LINK_SUFFIX)";
-				SFML_WINDOW = "$(SFML_LINK_PREFIX) sfml-window$(SFML_LINK_SUFFIX)";
+				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "$(inherited)";
 				SUPPORTED_PLATFORMS = macosx;
 			};
 			name = Debug;
@@ -789,17 +837,28 @@
 		0A0A41091A6C768B00AA18D6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = (
-					i386,
-					x86_64,
-				);
 				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
 				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					/Library/Frameworks/,
 					"$(inherited)",
 				);
+				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					/usr/local/include/,
 					"$(inherited)",
@@ -809,26 +868,7 @@
 					"$(inherited)",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.7;
-				OTHER_LDFLAGS = (
-					"$(inherited)",
-					"$(SFML_SYSTEM)",
-					"$(SFML_WINDOW)",
-					"$(SFML_GRAPHICS)",
-					"$(SFML_AUDIO)",
-					"$(SFML_NETWORK)",
-				);
-				SFML_AUDIO = "$(SFML_LINK_PREFIX) sfml-audio$(SFML_LINK_SUFFIX)";
-				SFML_BINARY_TYPE = FRAMEWORKS;
-				SFML_GRAPHICS = "$(SFML_LINK_PREFIX) sfml-graphics$(SFML_LINK_SUFFIX)";
-				SFML_LINK_DYLIBS_PREFIX = "-l";
-				SFML_LINK_DYLIBS_SUFFIX = "";
-				SFML_LINK_FRAMEWORKS_PREFIX = "-framework";
-				SFML_LINK_FRAMEWORKS_SUFFIX = "";
-				SFML_LINK_PREFIX = "$(SFML_LINK_$(SFML_BINARY_TYPE)_PREFIX)";
-				SFML_LINK_SUFFIX = "$(SFML_LINK_$(SFML_BINARY_TYPE)_SUFFIX)";
-				SFML_NETWORK = "$(SFML_LINK_PREFIX) sfml-network$(SFML_LINK_SUFFIX)";
-				SFML_SYSTEM = "$(SFML_LINK_PREFIX) sfml-system$(SFML_LINK_SUFFIX)";
-				SFML_WINDOW = "$(SFML_LINK_PREFIX) sfml-window$(SFML_LINK_SUFFIX)";
+				OTHER_LDFLAGS = "$(inherited)";
 				SUPPORTED_PLATFORMS = macosx;
 			};
 			name = Release;
@@ -836,7 +876,7 @@
 		0A0A410B1A6C768B00AA18D6 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
@@ -848,13 +888,9 @@
 				);
 				INFOPLIST_FILE = "pixelsort/fakeartist-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					/usr/local/Cellar/ffmpeg/2.5.2/lib,
-					/usr/local/Cellar/graphicsmagick/1.3.20/lib,
-					/usr/local/Cellar/opencv/2.4.10.1/lib,
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = fakeartist;
 				VALID_ARCHS = x86_64;
 			};
@@ -863,7 +899,7 @@
 		0A0A410C1A6C768B00AA18D6 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_64_BIT)";
+				COMBINE_HIDPI_IMAGES = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(LOCAL_LIBRARY_DIR)/Frameworks",
@@ -875,13 +911,9 @@
 				);
 				INFOPLIST_FILE = "pixelsort/fakeartist-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
-				LIBRARY_SEARCH_PATHS = (
-					"$(inherited)",
-					/usr/local/Cellar/ffmpeg/2.5.2/lib,
-					/usr/local/Cellar/graphicsmagick/1.3.20/lib,
-					/usr/local/Cellar/opencv/2.4.10.1/lib,
-				);
+				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				ONLY_ACTIVE_ARCH = YES;
+				OTHER_LDFLAGS = "$(inherited)";
 				PRODUCT_NAME = fakeartist;
 				VALID_ARCHS = x86_64;
 			};

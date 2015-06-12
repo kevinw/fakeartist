@@ -25,8 +25,6 @@
 #include "prettysort.h"
 
 
-const static bool showPlanets = false;
-
 using namespace sf;
 using namespace std;
 
@@ -36,7 +34,7 @@ Magick::Image sfmlToMagick(sf::Image& sfImage)
     Magick::Image image(Magick::Geometry(size.x, size.y));
     image.type(Magick::ImageType::TrueColorType);
     image.modifyImage();
-    
+    return image;
 }
 
 namespace sfe {
@@ -103,13 +101,9 @@ static void updateStateFromKeyboard(State& state, Keyboard::Key keyCode)
     }
 }
 
-static float randomFloat() {
-    return ((float)rand()) / (float)RAND_MAX;
-}
-
 int main(int, char const**)
 {
-    RenderWindow window(VideoMode(800, 600), "fake artist");
+    RenderWindow window(VideoMode(1024, 768), "fake artist");
     
     Image icon;
     if (!icon.loadFromFile(resourcePath() + "icon.png"))
@@ -166,7 +160,7 @@ int main(int, char const**)
                 recording = true;
             } else if (recording && event.type == Event::KeyReleased && event.key.code == Keyboard::Space) {
                 if (animated.size() > 0) {
-                    string path = "/Users/kevin/Desktop/test.gif";
+                    string path = "/tmp/test.gif";
                     cout << "Writing " << animated.size() << " images to " << path << endl;
 
                     vector<Magick::Image> magickAnimated;
