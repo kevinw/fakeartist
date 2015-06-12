@@ -23,6 +23,27 @@ secrets
 
 if you place videos into a folder at `~/fakeartist`, you MAY be able to sort those videos by pressing the up and down arrow keys.
 
+building
+--------
+
+#### Mac OS X
+
+1. Install [homebrew](http://brew.sh/)
+
+2. Install dependencies:
+
+```
+brew install sfml ffmpeg graphicsmagick
+brew tap homebrew/science
+brew install opencv
+```
+
+3. Open ```fakeartist.xcodeproj``` in Xcode and build.
+
+#### Windows / Linux
+
+???? (need your help here guys and gals)
+
 todo
 ----
 
