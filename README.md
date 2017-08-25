@@ -5,7 +5,7 @@ a video pixel sorting experiment. feeds your webcam any videos you have into a p
 
 download: [fakeartist.app](https://dl.dropboxusercontent.com/u/108139/fakeartist/fakeartist-osx.zip) (OS X)
 
-![screenshot](https://dl.dropboxusercontent.com/u/108139/fakeartist/fakeartist.jpg)
+![screenshot](http://kevinw.github.io/img/fakeartist.jpg)
 
 how to use
 ----------
