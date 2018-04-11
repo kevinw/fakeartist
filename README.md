@@ -1,7 +1,7 @@
 fakeartist
 ==========
 
-a video pixel sorting experiment. feeds your webcam any videos you have into a pixelsorter, live.
+a video pixel sorting experiment. feeds your webcam or any videos you have into a pixelsorter, live.
 
 download: [fakeartist.app](https://dl.dropboxusercontent.com/u/108139/fakeartist/fakeartist-osx.zip) (OS X)
 
